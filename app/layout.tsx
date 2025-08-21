@@ -23,7 +23,7 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <head>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.5.0/remixicon.min.css" integrity="sha512-u0yCa7v5jH6YH2FZkGJxwFQcg7s9fYdZ8B4XG1o5zIqfn0yX1Vg+0L83zYp4a1MF+y0Bn4P71frG1nKUw+zBAQ==" crossOrigin="anonymous" referrerPolicy="no-referrer" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" crossOrigin="anonymous" referrerPolicy="no-referrer" />
       </head>
   <body className={`${inter.className} ${notoSansJP.variable} font-sans antialiased`}>
         {/* Structured Data (Website + Organization) */}
