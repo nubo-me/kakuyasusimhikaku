@@ -88,36 +88,36 @@ export default function CompareContent() {
     },
     {
       carrier: 'UQ mobile',
-      name: 'トクトクプラン',
-      dataAllowance: '15GB',
-      price: '3,465円',
-      talkTime: '22円/30秒',
-      features: ['5G対応', 'au品質', '節約モード', '家族割引'],
+      name: 'トクトクプラン2',
+      dataAllowance: '〜30GB（段階制）',
+      price: '4,048円（割引前）',
+      talkTime: '22円/30秒（通話OPあり）',
+      features: ['5G対応', '利用量連動割引', '節約モード', '家族/自宅セット割'],
       networkQuality: '★★★★☆',
       speedThrottling: '1Mbps',
       esimSupport: true,
       mnpSupport: true,
-      familyDiscount: '最大1,100円割引',
+      familyDiscount: '条件下で最大割引',
       roaming: '別途料金'
     },
     {
       carrier: 'UQ mobile',
-      name: 'ミニミニプラン',
-      dataAllowance: '4GB',
-      price: '2,365円',
-      talkTime: '22円/30秒',
-      features: ['5G対応', '節約モード', '家族割引'],
+      name: 'コミコミプランバリュー',
+      dataAllowance: '35GB',
+      price: '3,828円',
+      talkTime: '10分無料（超過22円/30秒）',
+      features: ['5G対応', '10分通話込み', 'Pontaパス込み', 'サブスクぷらす対象'],
       networkQuality: '★★★★☆',
-      speedThrottling: '300Kbps',
+      speedThrottling: '1Mbps',
       esimSupport: true,
       mnpSupport: true,
-      familyDiscount: '最大1,100円割引',
+      familyDiscount: 'セット割対象',
       roaming: '別途料金'
     },
     {
       carrier: 'Y!mobile',
       name: 'シンプル2 M',
-      dataAllowance: '20GB',
+      dataAllowance: '30GB',
       price: '4,015円',
       talkTime: '22円/30秒',
       features: ['5G対応', 'ソフトバンク品質', '家族割引', 'PayPayポイント'],
@@ -167,13 +167,13 @@ export default function CompareContent() {
 
   const filteredPlans = useMemo(() => {
     if (filteredCategory === 'budget') {
-      return plans.filter(p => /3GB|4GB|〜10GB|トッピング制/.test(p.dataAllowance) || parseInt(p.price.replace(/[^\d]/g,'')) <= 1200);
+  return plans.filter(p => /3GB|4GB|〜10GB|トッピング制/.test(p.dataAllowance) || parseInt(p.price.replace(/[^\d]/g,'')) <= 1200);
     }
     if (filteredCategory === 'medium') {
-      return plans.filter(p => /15GB|20GB/.test(p.dataAllowance) || (parseInt(p.price.replace(/[^\d]/g,'')) > 1200 && parseInt(p.price.replace(/[^\d]/g,'')) <= 3500));
+      return plans.filter(p => /15GB|20GB|30GB/.test(p.dataAllowance) || (parseInt(p.price.replace(/[^\d]/g,'')) > 1200 && parseInt(p.price.replace(/[^\d]/g,'')) <= 4100));
     }
     if (filteredCategory === 'unlimited') {
-      return plans.filter(p => /30GB|100GB/.test(p.dataAllowance) || p.dataAllowance === 'トッピング制');
+      return plans.filter(p => /30GB|35GB|100GB|〜30GB/.test(p.dataAllowance) || p.dataAllowance === 'トッピング制');
     }
     return plans;
   }, [filteredCategory, plans]);
@@ -181,7 +181,7 @@ export default function CompareContent() {
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="container mx-auto px-4 py-8">
-        <div className="text-center mb-8">
+        <div className="text-center mb-4">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">
             格安SIM・携帯プラン比較
           </h1>
@@ -189,6 +189,7 @@ export default function CompareContent() {
             主要キャリアの格安プランを料金・サービス内容で詳細比較。
             あなたに最適なプランを見つけてください。
           </p>
+          <p className="text-xs text-gray-400 mt-2">最終更新: 2025-08-21</p>
         </div>
 
         <AdDisclosure />

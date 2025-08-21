@@ -258,12 +258,12 @@ export default function DiagnosisForm() {
       alternatives = [
         {
           brand: 'UQモバイル',
-          plan: 'トクトクプラン2（条件割引時）',
-          monthlyPrice: 4048,
-          realPrice: 3278,
-          dataAmount: '30GB（〜5GB利用で自動割引）',
-          brandColor: 'text-orange-600',
-          reason: '利用量によって自動割引される柔軟性'
+          plan: 'トクトクプラン2',
+            monthlyPrice: 4048,
+            realPrice: 4048,
+            dataAmount: '〜30GB（段階制）',
+            brandColor: 'text-orange-600',
+            reason: '5GB以下/セット割等で実質的な低価格利用も可能'
         }
       ];
     }
