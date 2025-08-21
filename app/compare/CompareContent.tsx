@@ -224,23 +224,30 @@ export default function CompareContent() {
                 </tr>
               </thead>
               <tbody>
-                {filteredPlans.map((plan, index) => (
-                  <tr key={`${plan.carrier}-${plan.name}-${index}`} className="hover:bg-gray-50">
-                    <td className="border border-gray-300 px-4 py-3 font-medium">{plan.carrier}</td>
-                    <td className="border border-gray-300 px-4 py-3">{plan.name}</td>
-                    <td className="border border-gray-300 px-4 py-3">{plan.dataAllowance}</td>
-                    <td className="border border-gray-300 px-4 py-3 font-semibold text-blue-600">{plan.price}</td>
-                    <td className="border border-gray-300 px-4 py-3">{plan.talkTime}</td>
-                    <td className="border border-gray-300 px-4 py-3">
-                      <ul className="text-sm">
-                        {plan.features.map((feature, idx) => (
-                          <li key={idx} className="text-gray-600">• {feature}</li>
-                        ))}
-                      </ul>
-                    </td>
-                    <td className="border border-gray-300 px-4 py-3">{plan.networkQuality}</td>
-                  </tr>
-                ))}
+                {plans.map((plan, index) => {
+                  const matched = filteredPlans.includes(plan);
+                  return (
+                    <tr
+                      key={`${plan.carrier}-${plan.name}-${index}`}
+                      className={`transition-opacity duration-300 ${matched ? 'hover:bg-gray-50' : 'opacity-30'} ${matched ? '' : 'pointer-events-none'}`}
+                      aria-hidden={!matched}
+                    >
+                      <td className="border border-gray-300 px-4 py-3 font-medium">{plan.carrier}</td>
+                      <td className="border border-gray-300 px-4 py-3">{plan.name}</td>
+                      <td className="border border-gray-300 px-4 py-3">{plan.dataAllowance}</td>
+                      <td className="border border-gray-300 px-4 py-3 font-semibold text-blue-600">{plan.price}</td>
+                      <td className="border border-gray-300 px-4 py-3">{plan.talkTime}</td>
+                      <td className="border border-gray-300 px-4 py-3">
+                        <ul className="text-sm">
+                          {plan.features.map((feature, idx) => (
+                            <li key={idx} className="text-gray-600">• {feature}</li>
+                          ))}
+                        </ul>
+                      </td>
+                      <td className="border border-gray-300 px-4 py-3">{plan.networkQuality}</td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>
@@ -267,7 +274,7 @@ export default function CompareContent() {
             </div>
           </div>
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mt-6">
-            <p className="text-xs text-gray-500">表示件数: <span className="font-semibold">{filteredPlans.length}</span> / {plans.length}</p>
+            <p className="text-xs text-gray-500">一致: <span className="font-semibold">{filteredPlans.length}</span> / 全{plans.length}行（非一致行は淡色表示）</p>
             <p className="text-xs text-gray-500">※価格は税込。キャンペーン/割引・トッピング条件は変動。最新は公式をご確認ください。</p>
           </div>
         </div>
