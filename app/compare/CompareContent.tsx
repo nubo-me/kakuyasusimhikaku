@@ -1,521 +1,289 @@
 'use client';
 
-import Link from 'next/link';
-import { useState, useMemo } from 'react';
-import { useSearchParams } from 'next/navigation';
-import AdDisclosure from '../components/AdDisclosure';
+import React, { useState, useEffect } from 'react';
+
+interface Plan {
+  carrier: string;
+  name: string;
+  dataAllowance: string;
+  price: string;
+  talkTime: string;
+  features: string[];
+  networkQuality: string;
+  speedThrottling: string;
+  esimSupport: boolean;
+  mnpSupport: boolean;
+  familyDiscount: string;
+  roaming: string;
+}
+
+const AdDisclosure = () => (
+  <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 mb-6">
+    <h3 className="text-sm font-semibold text-gray-800 mb-2">広告について</h3>
+    <p className="text-xs text-gray-600 leading-relaxed">
+      本サイトには各通信事業者のアフィリエイトリンクが含まれており、
+      ユーザーが当サイト経由でサービスに申し込んだ場合、運営者に紹介料が支払われる場合があります。
+      ただし、この紹介料は料金比較や評価に一切影響しておらず、
+      客観的で公正な情報提供を心がけています。
+    </p>
+  </div>
+);
 
 export default function CompareContent() {
-  const searchParams = useSearchParams();
+  const [filteredCategory, setFilteredCategory] = useState<string>('all');
+  const [isClient, setIsClient] = useState(false);
 
-  // category パラメータ: 旧仕様 ?filter=xxx も受け入れる（ユーザー報告で /compare?filter=esim が読み込み続ける症状）
-  // 無効値は 'all' にフォールバックし、クリーンな値を category へ。
-  const category = useMemo(() => {
-    const raw = (searchParams?.get('category') || searchParams?.get('filter') || 'all').toLowerCase();
-    const valid = ['all', 'popular', 'cheapest', 'unlimited', 'esim'];
-    return valid.includes(raw) ? raw : 'all';
-  }, [searchParams]);
+  useEffect(() => {
+    setIsClient(true);
+    
+    // URLパラメータを解析してカテゴリを設定
+    try {
+      const searchParams = new URLSearchParams(window.location.search);
+      const category = searchParams.get('category');
+      if (category && ['all', 'budget', 'medium', 'unlimited'].includes(category)) {
+        setFilteredCategory(category);
+      }
+    } catch (error) {
+      console.log('URLパラメータの解析に失敗しました:', error);
+    }
+  }, []);
 
-  const [filters, setFilters] = useState({
-    maxPrice: '',
-    dataAmount: '',
-    callOption: '',
-    support: '',
-    networkType: ''
-  });
-
-  const [sortBy, setSortBy] = useState('overall');
-
-  const plans = [
+  const plans: Plan[] = [
     {
-      id: 1,
-      brand: 'LINEMO',
-      brandColor: 'text-pink-600',
-      plan: 'ベストプラン',
-      monthlyPrice: 990,
-      initialCost: 0,
-      realMonthlyPrice: 490,
-      dataAmount: '～10GB',
-      callOption: '5分かけ放題：550円',
-      esim: true,
-      campaign: '通話オプション割引',
-      speed: '高速',
-      satisfaction: 4.3,
-      popular: true,
-      cheapest: true
+      carrier: 'ahamo',
+      name: 'ahamo',
+      dataAllowance: '30GB',
+      price: '2,970円',
+      talkTime: '5分かけ放題込み',
+      features: ['5G対応', 'ドコモ品質', '海外ローミング', 'テザリング'],
+      networkQuality: '★★★★★',
+      speedThrottling: '1Mbps',
+      esimSupport: true,
+      mnpSupport: true,
+      familyDiscount: 'なし',
+      roaming: '82カ国無料'
     },
     {
-      id: 2,
-      brand: 'povo2.0',
-      brandColor: 'text-purple-600',
-      plan: '基本料金',
-      monthlyPrice: 0,
-      initialCost: 0,
-      realMonthlyPrice: 390,
-      dataAmount: 'トッピング制',
-      callOption: '5分かけ放題：550円',
-      esim: true,
-      campaign: 'データトッピング特典',
-      speed: '高速',
-      satisfaction: 4.1,
-      popular: true,
-      cheapest: true
+      carrier: 'LINEMO',
+      name: 'ベストプランV',
+      dataAllowance: '30GB',
+      price: '2,728円',
+      talkTime: '22円/30秒',
+      features: ['5G対応', 'ソフトバンク品質', 'LINE使い放題', 'PayPayポイント'],
+      networkQuality: '★★★★★',
+      speedThrottling: '1Mbps',
+      esimSupport: true,
+      mnpSupport: true,
+      familyDiscount: 'なし',
+      roaming: '別途料金'
     },
     {
-      id: 3,
-      brand: 'ahamo',
-      brandColor: 'text-green-600',
-      plan: '基本プラン',
-      monthlyPrice: 2970,
-      initialCost: 0,
-      realMonthlyPrice: 2470,
-      dataAmount: '30GB',
-      callOption: '5分かけ放題込み',
-      esim: true,
-      campaign: 'dポイント還元',
-      speed: '最高速',
-      satisfaction: 4.5,
-      popular: true,
-      unlimited: true
+      carrier: 'LINEMO',
+      name: 'ミニプランV',
+      dataAllowance: '3GB',
+      price: '990円',
+      talkTime: '22円/30秒',
+      features: ['5G対応', 'LINE使い放題', 'PayPayポイント'],
+      networkQuality: '★★★★★',
+      speedThrottling: '300Kbps',
+      esimSupport: true,
+      mnpSupport: true,
+      familyDiscount: 'なし',
+      roaming: '別途料金'
     },
     {
-      id: 4,
-      brand: 'UQモバイル',
-      brandColor: 'text-orange-600',
-      plan: 'コミコミプランバリュー',
-      monthlyPrice: 3828,
-      initialCost: 3850,
-      realMonthlyPrice: 2728,
-      dataAmount: '35GB',
-      callOption: '10分かけ放題込み',
-      esim: true,
-      campaign: '家族割・auでんきセット割',
-      speed: '高速',
-      satisfaction: 4.2,
-      popular: true,
-      unlimited: true
+      carrier: 'UQ mobile',
+      name: 'トクトクプラン',
+      dataAllowance: '15GB',
+      price: '3,465円',
+      talkTime: '22円/30秒',
+      features: ['5G対応', 'au品質', '節約モード', '家族割引'],
+      networkQuality: '★★★★☆',
+      speedThrottling: '1Mbps',
+      esimSupport: true,
+      mnpSupport: true,
+      familyDiscount: '最大1,100円割引',
+      roaming: '別途料金'
     },
     {
-      id: 5,
-      brand: 'ワイモバイル',
-      brandColor: 'text-red-600',
-      plan: 'シンプルS',
-      monthlyPrice: 2178,
-      initialCost: 3850,
-      realMonthlyPrice: 1628,
-      dataAmount: '3GB',
-      callOption: '10分かけ放題：770円',
-      esim: true,
-      campaign: '家族割・おうち割光セット',
-      speed: '高速',
-      satisfaction: 4.0,
-      popular: true
+      carrier: 'UQ mobile',
+      name: 'ミニミニプラン',
+      dataAllowance: '4GB',
+      price: '2,365円',
+      talkTime: '22円/30秒',
+      features: ['5G対応', '節約モード', '家族割引'],
+      networkQuality: '★★★★☆',
+      speedThrottling: '300Kbps',
+      esimSupport: true,
+      mnpSupport: true,
+      familyDiscount: '最大1,100円割引',
+      roaming: '別途料金'
     },
     {
-      id: 6,
-      brand: 'mineo',
-      brandColor: 'text-green-500',
-      plan: 'マイピタ 5GB',
-      monthlyPrice: 1518,
-      initialCost: 3740,
-      realMonthlyPrice: 1830,
-      dataAmount: '5GB',
-      callOption: '10分かけ放題：550円',
-      esim: false,
-      campaign: 'パケット放題Plus無料',
-      speed: '標準',
-      satisfaction: 3.8,
-      cheapest: true
+      carrier: 'Y!mobile',
+      name: 'シンプル2 M',
+      dataAllowance: '20GB',
+      price: '4,015円',
+      talkTime: '22円/30秒',
+      features: ['5G対応', 'ソフトバンク品質', '家族割引', 'PayPayポイント'],
+      networkQuality: '★★★★☆',
+      speedThrottling: '1Mbps',
+      esimSupport: true,
+      mnpSupport: true,
+      familyDiscount: '最大1,188円割引',
+      roaming: '別途料金'
     },
     {
-      id: 7,
-      brand: 'IIJmio',
-      brandColor: 'text-blue-500',
-      plan: 'ギガプラン 5GB',
-      monthlyPrice: 990,
-      initialCost: 3733,
-      realMonthlyPrice: 1301,
-      dataAmount: '5GB',
-      callOption: '5分かけ放題：500円',
-      esim: true,
-      campaign: '初期費用割引',
-      speed: '標準',
-      satisfaction: 3.9,
-      cheapest: true
+      carrier: 'Y!mobile',
+      name: 'シンプル2 S',
+      dataAllowance: '4GB',
+      price: '2,365円',
+      talkTime: '22円/30秒',
+      features: ['5G対応', '家族割引', 'PayPayポイント'],
+      networkQuality: '★★★★☆',
+      speedThrottling: '300Kbps',
+      esimSupport: true,
+      mnpSupport: true,
+      familyDiscount: '最大1,188円割引',
+      roaming: '別途料金'
     },
     {
-      id: 8,
-      brand: 'OCNモバイルONE',
-      brandColor: 'text-orange-500',
-      plan: '1GB',
-      monthlyPrice: 770,
-      initialCost: 3733,
-      realMonthlyPrice: 1081,
-      dataAmount: '1GB',
-      callOption: '10分かけ放題：935円',
-      esim: false,
-      campaign: 'スマホセール',
-      speed: '標準',
-      satisfaction: 3.7,
-      cheapest: true
+      carrier: 'povo',
+      name: 'povo2.0',
+      dataAllowance: 'トッピング制',
+      price: '0円〜',
+      talkTime: '22円/30秒',
+      features: ['5G対応', 'au品質', 'トッピング自由', '期間限定トッピング'],
+      networkQuality: '★★★★☆',
+      speedThrottling: '128Kbps',
+      esimSupport: true,
+      mnpSupport: true,
+      familyDiscount: 'なし',
+      roaming: '別途料金'
     }
   ];
 
-  const getCategoryTitle = () => {
-    switch (category) {
-      case 'popular': return '人気ランキング';
-      case 'cheapest': return '最安プラン';
-      case 'unlimited': return 'かけ放題プラン';
-      case 'esim': return 'eSIM対応プラン';
-      default: return '料金比較';
+  const categories = [
+    { id: 'all', name: '全プラン' },
+    { id: 'budget', name: '格安プラン' },
+    { id: 'medium', name: '中容量プラン' },
+    { id: 'unlimited', name: '大容量プラン' }
+  ];
+
+  const getFilteredPlans = () => {
+    switch (filteredCategory) {
+      case 'budget':
+        return plans.filter(plan => 
+          parseInt(plan.price.replace(/[^\d]/g, '')) < 1500 || 
+          plan.name === 'ミニプランV' || plan.name === 'ミニミニプラン' || plan.name === 'シンプル2 S'
+        );
+      case 'medium':
+        return plans.filter(plan => {
+          const price = parseInt(plan.price.replace(/[^\d]/g, ''));
+          return (price >= 1500 && price <= 3500) || 
+                 plan.dataAllowance.includes('15GB') || 
+                 plan.dataAllowance.includes('20GB');
+        });
+      case 'unlimited':
+        return plans.filter(plan => 
+          plan.dataAllowance.includes('30GB') || 
+          plan.dataAllowance === 'トッピング制'
+        );
+      default:
+        return plans;
     }
   };
 
-  const filteredPlans = plans.filter(plan => {
-    if (category === 'popular' && !plan.popular) return false;
-    if (category === 'cheapest' && !plan.cheapest) return false;
-    if (category === 'unlimited' && !plan.unlimited) return false;
-    if (category === 'esim' && !plan.esim) return false;
-    return true;
-  });
-
-  const sortedPlans = [...filteredPlans].sort((a, b) => {
-    switch (sortBy) {
-      case 'cheapest': return a.realMonthlyPrice - b.realMonthlyPrice;
-      case 'speed': return b.speed === '最高速' ? 1 : a.speed === '最高速' ? -1 : 0;
-      case 'satisfaction': return b.satisfaction - a.satisfaction;
-      default: return 0;
-    }
-  });
-
   return (
-    <div className="min-h-screen bg-white">
-      {/* BreadcrumbList Structured Data (動的カテゴリ対応) */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            '@context': 'https://schema.org',
-            '@type': 'BreadcrumbList',
-            itemListElement: [
-              {
-                '@type': 'ListItem',
-                position: 1,
-                name: 'ホーム',
-                item: 'https://example.com/'
-              },
-              {
-                '@type': 'ListItem',
-                position: 2,
-                name: getCategoryTitle(),
-                item: 'https://example.com/compare'
-              }
-            ]
-          })
-        }}
-      />
-
-      {/* Breadcrumb */}
-      <div className="bg-gray-50 py-4">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <nav className="text-sm">
-            <Link href="/" className="text-gray-500 hover:text-blue-600">ホーム</Link>
-            <span className="text-gray-400 mx-2">/</span>
-            <span className="text-gray-900">{getCategoryTitle()}</span>
-          </nav>
-        </div>
-      </div>
-
-      {/* Page Header */}
-      <section className="py-12 bg-gradient-to-br from-blue-50 to-indigo-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">{getCategoryTitle()}</h1>
-          <div className="mb-4 flex justify-center">
-            <AdDisclosure variant="plain" compact />
-          </div>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            {category === 'popular' && '利用者に選ばれている人気の格安SIMプランを比較できます'}
-            {category === 'cheapest' && '月額料金が安い格安SIMプランを厳選して比較できます'}
-            {category === 'unlimited' && 'かけ放題オプション付きの格安SIMプランを比較できます'}
-            {category === 'esim' && 'eSIM対応で即日開通可能な格安SIMプランを比較できます'}
-            {category === 'all' && '主要格安SIMプランの料金・サービス内容を一覧で比較できます'}
+    <div className="min-h-screen bg-gray-50">
+      <div className="container mx-auto px-4 py-8">
+        <div className="text-center mb-8">
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">
+            格安SIM・携帯プラン比較
+          </h1>
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            主要キャリアの格安プランを料金・サービス内容で詳細比較。
+            あなたに最適なプランを見つけてください。
           </p>
         </div>
-      </section>
 
-      {/* Filter Tabs */}
-      <section className="py-8 bg-white border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-wrap gap-2 justify-center mb-6">
-            <Link 
-              href="/compare"
-              className={`px-6 py-2 rounded-full border font-medium transition-colors ${
-                category === 'all' 
-                ? 'bg-blue-600 text-white border-blue-600' 
-                : 'text-gray-700 border-gray-300 hover:border-blue-300'
-              }`}
-            >
-              すべて
-            </Link>
-            <Link 
-              href="/compare?category=popular"
-              className={`px-6 py-2 rounded-full border font-medium transition-colors ${
-                category === 'popular' 
-                ? 'bg-blue-600 text-white border-blue-600' 
-                : 'text-gray-700 border-gray-300 hover:border-blue-300'
-              }`}
-            >
-              人気ランキング
-            </Link>
-            <Link 
-              href="/compare?category=cheapest"
-              className={`px-6 py-2 rounded-full border font-medium transition-colors ${
-                category === 'cheapest' 
-                ? 'bg-blue-600 text-white border-blue-600' 
-                : 'text-gray-700 border-gray-300 hover:border-blue-300'
-              }`}
-            >
-              最安プラン
-            </Link>
-            <Link 
-              href="/compare?category=unlimited"
-              className={`px-6 py-2 rounded-full border font-medium transition-colors ${
-                category === 'unlimited' 
-                ? 'bg-blue-600 text-white border-blue-600' 
-                : 'text-gray-700 border-gray-300 hover:border-blue-300'
-              }`}
-            >
-              かけ放題
-            </Link>
-            <Link 
-              href="/compare?category=esim"
-              className={`px-6 py-2 rounded-full border font-medium transition-colors ${
-                category === 'esim' 
-                ? 'bg-blue-600 text-white border-blue-600' 
-                : 'text-gray-700 border-gray-300 hover:border-blue-300'
-              }`}
-            >
-              eSIM対応
-            </Link>
+        <AdDisclosure />
+
+        <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
+          <div className="flex flex-wrap gap-4 mb-6">
+            {categories.map((category) => (
+              <button
+                key={category.id}
+                onClick={() => setFilteredCategory(category.id)}
+                className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                  filteredCategory === category.id
+                    ? 'bg-blue-600 text-white'
+                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                }`}
+              >
+                {category.name}
+              </button>
+            ))}
           </div>
 
-          {/* Sort Options */}
-          <div className="flex flex-wrap gap-4 justify-center">
-            <select 
-              value={sortBy}
-              onChange={(e) => setSortBy(e.target.value)}
-              className="px-4 py-2 border border-gray-300 rounded-lg pr-8"
-            >
-              <option value="overall">総合評価順</option>
-              <option value="cheapest">料金が安い順</option>
-              <option value="speed">通信速度順</option>
-              <option value="satisfaction">満足度順</option>
-            </select>
-          </div>
-        </div>
-      </section>
-
-      {/* Comparison Table */}
-      <section className="py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="overflow-x-auto">
-            <table className="w-full bg-white rounded-xl shadow-lg overflow-hidden">
-              <thead className="bg-gray-100">
-                <tr>
-                  <th className="px-6 py-4 text-left font-semibold">ランキング</th>
-                  <th className="px-6 py-4 text-left font-semibold">ブランド・プラン</th>
-                  <th className="px-6 py-4 text-left font-semibold">月額料金</th>
-                  <th className="px-6 py-4 text-left font-semibold">実質月額*</th>
-                  <th className="px-6 py-4 text-left font-semibold">データ量</th>
-                  <th className="px-6 py-4 text-left font-semibold">通話オプション</th>
-                  <th className="px-6 py-4 text-left font-semibold">eSIM</th>
-                  <th className="px-6 py-4 text-left font-semibold">キャンペーン</th>
-                  <th className="px-6 py-4 text-left font-semibold">詳細</th>
+            <table className="w-full border-collapse">
+              <thead>
+                <tr className="bg-gray-50">
+                  <th className="border border-gray-300 px-4 py-3 text-left font-semibold">キャリア</th>
+                  <th className="border border-gray-300 px-4 py-3 text-left font-semibold">プラン名</th>
+                  <th className="border border-gray-300 px-4 py-3 text-left font-semibold">データ容量</th>
+                  <th className="border border-gray-300 px-4 py-3 text-left font-semibold">月額料金</th>
+                  <th className="border border-gray-300 px-4 py-3 text-left font-semibold">通話料</th>
+                  <th className="border border-gray-300 px-4 py-3 text-left font-semibold">特徴</th>
+                  <th className="border border-gray-300 px-4 py-3 text-left font-semibold">通信品質</th>
                 </tr>
               </thead>
               <tbody>
-                {sortedPlans.map((plan, index) => (
-                  <tr key={plan.id} className="border-b border-gray-100 hover:bg-gray-50">
-                    <td className="px-6 py-4">
-                      <div className="flex items-center">
-                        <span className="text-2xl font-bold text-blue-600">#{index + 1}</span>
-                        {index === 0 && (
-                          <span className="ml-2 bg-yellow-100 text-yellow-600 text-xs px-2 py-1 rounded-full">
-                            <i className="ri-trophy-line mr-1"></i>1位
-                          </span>
-                        )}
-                        {plan.cheapest && (
-                          <span className="ml-2 bg-red-100 text-red-600 text-xs px-2 py-1 rounded-full">最安</span>
-                        )}
-                      </div>
+                {getFilteredPlans().map((plan, index) => (
+                  <tr key={`${plan.carrier}-${plan.name}-${index}`} className="hover:bg-gray-50">
+                    <td className="border border-gray-300 px-4 py-3 font-medium">{plan.carrier}</td>
+                    <td className="border border-gray-300 px-4 py-3">{plan.name}</td>
+                    <td className="border border-gray-300 px-4 py-3">{plan.dataAllowance}</td>
+                    <td className="border border-gray-300 px-4 py-3 font-semibold text-blue-600">{plan.price}</td>
+                    <td className="border border-gray-300 px-4 py-3">{plan.talkTime}</td>
+                    <td className="border border-gray-300 px-4 py-3">
+                      <ul className="text-sm">
+                        {plan.features.map((feature, idx) => (
+                          <li key={idx} className="text-gray-600">• {feature}</li>
+                        ))}
+                      </ul>
                     </td>
-                    <td className="px-6 py-4">
-                      <div>
-                        <div className={`font-bold text-lg ${plan.brandColor}`}>{plan.brand}</div>
-                        <div className="text-gray-600 text-sm">{plan.plan}</div>
-                        <div className="flex items-center mt-1">
-                          <div className="flex text-yellow-400 text-sm">
-                            {[...Array(5)].map((_, i) => (
-                              <i 
-                                key={i} 
-                                className={i < Math.floor(plan.satisfaction) ? "ri-star-fill" : "ri-star-line"}
-                              ></i>
-                            ))}
-                          </div>
-                          <span className="ml-2 text-sm text-gray-600">{plan.satisfaction}</span>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4">
-                      <div className="font-bold text-lg">{plan.monthlyPrice.toLocaleString()}円</div>
-                      <div className="text-sm text-gray-500">初期費用: {plan.initialCost.toLocaleString()}円</div>
-                    </td>
-                    <td className="px-6 py-4">
-                      <div className="font-bold text-lg text-green-600">{plan.realMonthlyPrice.toLocaleString()}円</div>
-                      <div className="text-sm text-gray-500">キャンペーン適用時</div>
-                    </td>
-                    <td className="px-6 py-4 font-semibold">{plan.dataAmount}</td>
-                    <td className="px-6 py-4">
-                      <div className="text-sm">{plan.callOption}</div>
-                    </td>
-                    <td className="px-6 py-4 text-center">
-                      {plan.esim ? (
-                        <i className="ri-check-line text-green-500 text-xl"></i>
-                      ) : (
-                        <i className="ri-close-line text-gray-400 text-xl"></i>
-                      )}
-                    </td>
-                    <td className="px-6 py-4">
-                      <div className="text-sm text-blue-600">{plan.campaign}</div>
-                    </td>
-                    <td className="px-6 py-4">
-                      <Link 
-                        href={`/brands/${plan.brand.toLowerCase().replace(/[^a-z0-9]/g, '')}`}
-                        className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700 transition-colors whitespace-nowrap"
-                      >
-                        詳細を見る
-                      </Link>
-                    </td>
+                    <td className="border border-gray-300 px-4 py-3">{plan.networkQuality}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
-            <div className="mt-6 space-y-2 text-sm text-gray-500">
-              <p>*実質月額 = (月額×12 - キャンペーン割引 + 初期費用) ÷ 12で計算</p>
-              <p>※表示価格は税込み。キャンペーン/割引は実施状況や適用条件により変動します。詳細は各社公式をご確認ください。</p>
-              <p>※料金は税込価格です。最新の料金・特典は各公式サイトでご確認ください。</p>
+          </div>
+        </div>
+
+        <div className="bg-white rounded-lg shadow-lg p-6">
+          <h2 className="text-2xl font-bold text-gray-900 mb-4">プラン選びのポイント</h2>
+          <div className="grid md:grid-cols-2 gap-6">
+            <div>
+              <h3 className="text-lg font-semibold text-gray-800 mb-2">データ使用量で選ぶ</h3>
+              <ul className="text-gray-600 space-y-1">
+                <li>• 3GB以下: ライトユーザー向け</li>
+                <li>• 15-20GB: 一般的な使用量</li>
+                <li>• 30GB以上: ヘビーユーザー向け</li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold text-gray-800 mb-2">重視するポイント</h3>
+              <ul className="text-gray-600 space-y-1">
+                <li>• 通信品質重視: ahamo、LINEMO</li>
+                <li>• 料金重視: povo、LINEMO ミニプラン</li>
+                <li>• 家族割引: UQ mobile、Y!mobile</li>
+              </ul>
             </div>
           </div>
         </div>
-      </section>
-
-      {/* Recommendation Cards */}
-      <section className="py-16 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center text-gray-900 mb-10">シーン別おすすめプラン</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-white rounded-xl p-8 shadow-lg">
-              <div className="text-center mb-6">
-                <i className="ri-money-dollar-circle-line text-4xl text-green-500 mb-4"></i>
-                <h3 className="text-xl font-bold">とにかく安くしたい</h3>
-                <p className="text-gray-600 mt-2">月額料金を最重視する方</p>
-              </div>
-              <div className="space-y-3">
-                <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-                  <span className="font-semibold">LINEMO ベストプラン</span>
-                  <span className="text-green-600 font-bold">490円/月</span>
-                </div>
-                <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-                  <span className="font-semibold">povo2.0 基本料</span>
-                  <span className="text-green-600 font-bold">390円/月</span>
-                </div>
-              </div>
-              <Link 
-                href="/compare?category=cheapest"
-                className="block text-center bg-green-600 text-white py-3 rounded-lg font-semibold mt-6 hover:bg-green-700 transition-colors"
-              >
-                最安プランを比較
-              </Link>
-            </div>
-
-            <div className="bg-white rounded-xl p-8 shadow-lg">
-              <div className="text-center mb-6">
-                <i className="ri-speed-line text-4xl text-blue-500 mb-4"></i>
-                <h3 className="text-xl font-bold">速度重視</h3>
-                <p className="text-gray-600 mt-2">通信品質を重視する方</p>
-              </div>
-              <div className="space-y-3">
-                <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-                  <span className="font-semibold">ahamo</span>
-                  <span className="text-blue-600 font-bold">2,470円/月</span>
-                </div>
-                <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-                  <span className="font-semibold">UQモバイル</span>
-                  <span className="text-blue-600 font-bold">2,728円/月</span>
-                </div>
-              </div>
-              <Link 
-                href="/compare?category=popular"
-                className="block text-center bg-blue-600 text-white py-3 rounded-lg font-semibold mt-6 hover:bg-blue-700 transition-colors"
-              >
-                高品質プランを比較
-              </Link>
-            </div>
-
-            <div className="bg-white rounded-xl p-8 shadow-lg">
-              <div className="text-center mb-6">
-                <i className="ri-smartphone-line text-4xl text-purple-500 mb-4"></i>
-                <h3 className="text-xl font-bold">すぐ使いたい</h3>
-                <p className="text-gray-600 mt-2">eSIMで即日開通したい方</p>
-              </div>
-              <div className="space-y-3">
-                <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-                  <span className="font-semibold">LINEMO</span>
-                  <span className="text-purple-600 font-bold">eSIM対応</span>
-                </div>
-                <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-                  <span className="font-semibold">ahamo</span>
-                  <span className="text-purple-600 font-bold">eSIM対応</span>
-                </div>
-              </div>
-              <Link 
-                href="/compare?category=esim"
-                className="block text-center bg-purple-600 text-white py-3 rounded-lg font-semibold mt-6 hover:bg-purple-700 transition-colors"
-              >
-                eSIM対応プラン比較
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-16 bg-blue-600 text-white">
-        <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold mb-4">
-            最適なプランは見つかりましたか？
-          </h2>
-          <p className="text-xl mb-8 opacity-90">
-            乗り換え手順ガイドで、スムーズに格安SIMデビュー
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link 
-              href="/guide/mnp"
-              className="bg-white text-blue-600 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-100 transition-colors whitespace-nowrap"
-            >
-              乗り換え手順を見る
-            </Link>
-            <Link 
-              href="/guide/esim"
-              className="bg-blue-700 text-white border-2 border-blue-400 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-blue-800 transition-colors whitespace-nowrap"
-            >
-              eSIM設定方法
-            </Link>
-          </div>
-        </div>
-      </section>
-
-  {/* Footer はグローバル layout.tsx に統合済み */}
+      </div>
     </div>
   );
 }
