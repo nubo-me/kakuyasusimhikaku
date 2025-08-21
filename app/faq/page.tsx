@@ -18,6 +18,14 @@ export default function FaqPage() {
     );
   };
 
+  const colorMap: Record<string, { badgeBg: string; badgeText: string; gradFrom: string; gradTo: string; gradFromLight: string; gradToLight: string; }>= {
+    blue: { badgeBg: 'bg-blue-100', badgeText: 'text-blue-700', gradFrom: 'from-blue-500', gradTo: 'to-blue-600', gradFromLight: 'from-blue-400', gradToLight: 'to-blue-500' },
+    green: { badgeBg: 'bg-green-100', badgeText: 'text-green-700', gradFrom: 'from-green-500', gradTo: 'to-green-600', gradFromLight: 'from-green-400', gradToLight: 'to-green-500' },
+    purple: { badgeBg: 'bg-purple-100', badgeText: 'text-purple-700', gradFrom: 'from-purple-500', gradTo: 'to-purple-600', gradFromLight: 'from-purple-400', gradToLight: 'to-purple-500' },
+    orange: { badgeBg: 'bg-orange-100', badgeText: 'text-orange-700', gradFrom: 'from-orange-500', gradTo: 'to-orange-600', gradFromLight: 'from-orange-400', gradToLight: 'to-orange-500' },
+    red: { badgeBg: 'bg-red-100', badgeText: 'text-red-700', gradFrom: 'from-red-500', gradTo: 'to-red-600', gradFromLight: 'from-red-400', gradToLight: 'to-red-500' }
+  };
+
   const faqCategories = [
     {
       title: '基本的な質問',
@@ -221,7 +229,7 @@ export default function FaqPage() {
           {faqCategories.map((category, categoryIndex) => (
             <div key={categoryIndex} className="mb-16">
               <div className="text-center mb-12">
-                <div className={`inline-flex items-center px-6 py-3 rounded-full bg-${category.color}-100 text-${category.color}-700 mb-4`}>
+                <div className={`inline-flex items-center px-6 py-3 rounded-full ${colorMap[category.color].badgeBg} ${colorMap[category.color].badgeText} mb-4`}>
                   <i className={`${category.icon} text-xl mr-3`}></i>
                   <span className="font-semibold text-lg">{category.title}</span>
                 </div>
@@ -246,7 +254,7 @@ export default function FaqPage() {
                         type="button"
                       >
                         <div className="flex items-start">
-                          <div className={`flex-shrink-0 w-10 h-10 bg-gradient-to-r from-${category.color}-500 to-${category.color}-600 rounded-full flex items-center justify-center mr-4 mt-1`}>
+                          <div className={`flex-shrink-0 w-10 h-10 bg-gradient-to-r ${colorMap[category.color].gradFrom} ${colorMap[category.color].gradTo} rounded-full flex items-center justify-center mr-4 mt-1`}>
                             <span className="text-white font-bold text-sm">Q</span>
                           </div>
                           <h3 className="text-xl font-bold text-gray-900 pr-4">{faq.question}</h3>
@@ -261,7 +269,7 @@ export default function FaqPage() {
                       {isOpen && (
                         <div id={answerId} role="region" aria-labelledby={answerId + '-label'} className="px-6 lg:px-8 pb-6 lg:pb-8">
                           <div className="ml-14">
-                            <div className={`w-8 h-8 bg-gradient-to-r from-${category.color}-400 to-${category.color}-500 rounded-full flex items-center justify-center mb-4`}>
+                            <div className={`w-8 h-8 bg-gradient-to-r ${colorMap[category.color].gradFromLight} ${colorMap[category.color].gradToLight} rounded-full flex items-center justify-center mb-4`}>
                               <span className="text-white font-bold text-sm">A</span>
                             </div>
                             <div className="prose prose-lg max-w-none" id={answerId + '-label'}>
