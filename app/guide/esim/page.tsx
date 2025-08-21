@@ -13,41 +13,33 @@ export default function EsimGuidePage() {
   ];
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Header */}
-      <header className="bg-white shadow-sm border-b">
-        <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center">
-              <Link href="/" className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">格安SIM比較</Link>
-            </div>
-            <div className="hidden md:block">
-              <div className="ml-10 flex items-baseline space-x-4">
-                <Link href="/compare" className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">
-                  料金比較
-                </Link>
-                <Link href="/guide/mnp" className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">
-                  乗り換え手順
-                </Link>
-                <Link href="/guide/esim" className="text-blue-600 px-3 py-2 rounded-md text-sm font-medium">
-                  eSIM設定
-                </Link>
-                <Link href="/faq" className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">
-                  よくある質問
-                </Link>
-              </div>
-            </div>
-          </div>
-        </nav>
-      </header>
+  <div className="min-h-screen bg-white">
 
       {/* Breadcrumb */}
       <div className="bg-gray-50 py-4">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <nav className="text-sm">
-            <Link href="/" className="text-gray-500 hover:text-blue-600">ホーム</Link>
-            <span className="text-gray-400 mx-2">/</span>
-            <span className="text-gray-900">eSIM設定ガイド</span>
+          <nav className="text-sm" aria-label="パンくず">
+            <ol className="flex items-center flex-wrap gap-1">
+              <li>
+                <Link href="/" className="text-gray-500 hover:text-blue-600 underline-offset-2 hover:underline">ホーム</Link>
+              </li>
+              <li className="text-gray-400">/</li>
+              <li className="text-gray-900" aria-current="page">eSIM設定ガイド</li>
+            </ol>
+            <script
+              type="application/ld+json"
+              // JSON-LD for BreadcrumbList
+              dangerouslySetInnerHTML={{
+                __html: JSON.stringify({
+                  '@context': 'https://schema.org',
+                  '@type': 'BreadcrumbList',
+                  itemListElement: [
+                    { '@type': 'ListItem', position: 1, name: 'ホーム', item: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://example.com'}/` },
+                    { '@type': 'ListItem', position: 2, name: 'eSIM設定ガイド', item: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://example.com'}/guide/esim` }
+                  ]
+                })
+              }}
+            />
           </nav>
         </div>
       </div>
@@ -483,6 +475,35 @@ export default function EsimGuidePage() {
         </section>
       )}
 
+      {/* 共通の動作確認と注意事項 */}
+      <section className="py-16 bg-white border-t border-gray-100">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-2xl font-bold mb-6 text-gray-900">共通の動作確認と注意</h2>
+          <div className="grid gap-6 md:grid-cols-2">
+            <div className="bg-blue-50 border border-blue-200 rounded-xl p-6">
+              <h3 className="font-semibold mb-3 text-blue-900">動作確認チェック</h3>
+              <ul className="space-y-2 text-sm text-blue-800 list-disc pl-5">
+                <li>アンテナ表示と4G/5Gピクト確認</li>
+                <li>ブラウザでWebページ表示</li>
+                <li>SMS受信（認証コード）テスト</li>
+                <li>発信試験番号 (例: 111 等) で短時間の通話接続確認</li>
+              </ul>
+              <p className="text-xs text-blue-700 mt-4">※ 発信試験番号は事業者/地域によって未提供の場合があります。</p>
+            </div>
+            <div className="bg-amber-50 border border-amber-200 rounded-xl p-6">
+              <h3 className="font-semibold mb-3 text-amber-900">注意・禁止事項</h3>
+              <ul className="space-y-2 text-sm text-amber-800 list-disc pl-5">
+                <li>緊急通報番号 (110 / 118 / 119) をテスト目的で発信しない</li>
+                <li>長時間の無音接続を継続しない（必要最小限で切断）</li>
+                <li>不通時は SIM再挿入 / 機内モード切替 / 端末再起動 / APN再確認</li>
+                <li>改善しない場合はログ時間帯を控えてサポートへ問い合わせ</li>
+              </ul>
+              <p className="text-xs text-amber-700 mt-4">※ 発信試験が不可の回線ではデータ通信とSMS確認のみで問題ありません。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Common Troubleshooting */}
       <section className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -599,51 +620,7 @@ export default function EsimGuidePage() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-gradient-to-r from-gray-900 via-blue-900 to-purple-900 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-          <div className="grid md:grid-cols-4 gap-8">
-            <div className="md:col-span-2">
-              <h3 className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-4">
-                格安SIM完全比較ガイド
-              </h3>
-              <p className="text-gray-300 mb-6 leading-relaxed">
-                50万人が利用する格安SIM比較サイト。最新の料金プラン、通信速度、キャンペーン情報を毎日更新。
-                あなたに最適な格安SIMを見つけて、通信費を大幅に削減しましょう。
-              </p>
-            </div>
-            
-            <div>
-              <h4 className="font-semibold mb-4">サービス</h4>
-              <ul className="space-y-2 text-gray-300">
-                <li><Link href="/compare" className="hover:text-blue-400 transition-colors">プラン比較</Link></li>
-                <li><Link href="/brands/linemo" className="hover:text-blue-400 transition-colors">LINEMO</Link></li>
-                <li><Link href="/brands/ahamo" className="hover:text-blue-400 transition-colors">ahamo</Link></li>
-                <li><Link href="/brands/povo" className="hover:text-blue-400 transition-colors">povo</Link></li>
-              </ul>
-            </div>
-            
-            <div>
-              <h4 className="font-semibold mb-4">サポート</h4>
-              <ul className="space-y-2 text-gray-300">
-                <li><Link href="/guide/mnp" className="hover:text-blue-400 transition-colors">乗り換えガイド</Link></li>
-                <li><Link href="/guide/esim" className="hover:text-blue-400 transition-colors">eSIM設定</Link></li>
-                <li><Link href="/faq" className="hover:text-blue-400 transition-colors">よくある質問</Link></li>
-                <li><Link href="/policy" className="hover:text-blue-400 transition-colors">利用規約</Link></li>
-              </ul>
-            </div>
-          </div>
-          
-          <div className="border-t border-gray-700 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
-            <p className="text-gray-400 text-sm">
-              © 2025 格安SIM完全比較ガイド. All rights reserved.
-            </p>
-            <p className="text-gray-400 text-sm mt-4 md:mt-0">
-              ※最新の料金・特典は各公式サイトをご確認ください
-            </p>
-          </div>
-        </div>
-      </footer>
+  {/* Global footer is provided by root layout */}
     </div>
   );
 }

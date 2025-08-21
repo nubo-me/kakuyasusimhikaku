@@ -10,9 +10,9 @@ const notoSansJP = Noto_Sans_JP({
 });
 
 export const metadata: Metadata = {
-  title: '格安SIM完全比較ガイド2024 | 月額990円〜最安プラン診断',
-  description: '50万人が選んだ格安SIM比較サイト。ahamo・povo・LINEMO等の料金・速度・キャンペーンを徹底比較。乗り換えで年間6万円節約可能。eSIM対応状況も詳しく解説。',
-  keywords: '格安SIM,比較,おすすめ,ahamo,povo,LINEMO,乗り換え,MNP,eSIM,料金',
+  title: '格安SIM完全比較ガイド2025 | 月額990円〜最適プラン診断',
+  description: '2025年最新｜主要ブランドの料金・速度・キャンペーンを中立比較。節約目安：月2,000〜4,000円（年24,000〜48,000円）。',
+  keywords: '格安SIM,比較,料金,速度,キャンペーン,MNP,eSIM',
 };
 
 export default function RootLayout({
@@ -23,6 +23,36 @@ export default function RootLayout({
   return (
     <html lang="ja">
   <body className={`${inter.className} ${notoSansJP.variable} font-sans antialiased`}>
+        {/* Structured Data (Website + Organization) */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@graph': [
+                {
+                  '@type': 'WebSite',
+                  name: '格安SIM完全比較ガイド',
+                  url: 'https://example.com/',
+                  inLanguage: 'ja-JP',
+                  description: '主要ブランドの料金・速度・キャンペーンを中立比較する格安SIM比較サイト',
+                  potentialAction: {
+                    '@type': 'SearchAction',
+                    target: 'https://example.com/search?q={search_term_string}',
+                    'query-input': 'required name=search_term_string'
+                  }
+                },
+                {
+                  '@type': 'Organization',
+                  name: '格安SIM完全比較ガイド運営',
+                  url: 'https://example.com/',
+                  logo: 'https://example.com/logo.png'
+                }
+              ]
+            })
+          }}
+        />
+        {/* Breadcrumb (rendered only when microdata container exists in pages; kept minimal as global baseline) */}
         <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-200 shadow-sm">
           <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between items-center h-16">
@@ -81,8 +111,8 @@ export default function RootLayout({
                   格安SIM完全比較ガイド
                 </h3>
                 <p className="text-gray-300 mb-6 leading-relaxed">
-                  50万人が利用する格安SIM比較サイト。最新の料金プラン、通信速度、キャンペーン情報を毎日更新。
-                  あなたに最適な格安SIMを見つけて、通信費を大幅に削減しましょう。
+                  2025年最新｜主要ブランドの料金・速度・キャンペーンを中立比較。節約目安：月2,000〜4,000円（年24,000〜48,000円）。
+                  最新情報は各公式サイトでご確認ください。
                 </p>
               </div>
               <div>

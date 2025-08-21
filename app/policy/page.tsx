@@ -304,7 +304,7 @@ export default function PolicyPage() {
                 格安SIM完全比較ガイド
               </h3>
               <p className="text-gray-300 mb-6 leading-relaxed">
-                50万人が利用する格安SIM比較サイト。最新の料金プラン、通信速度、キャンペーン情報を毎日更新。
+                2025年最新｜主要ブランドの料金・速度・キャンペーンを中立比較。節約目安：月2,000〜4,000円（年24,000〜48,000円）。
                 あなたに最適な格安SIMを見つけて、通信費を大幅に削減しましょう。
               </p>
             </div>
@@ -328,7 +328,7 @@ export default function PolicyPage() {
           
           <div className="border-t border-gray-700 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
             <p className="text-gray-400 text-sm">
-              © 2024 格安SIM完全比較ガイド. All rights reserved.
+              © 2025 格安SIM完全比較ガイド. All rights reserved.
             </p>
             <p className="text-gray-400 text-sm mt-4 md:mt-0">
               ※最新の料金・特典は各公式サイトをご確認ください

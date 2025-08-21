@@ -1,771 +1,221 @@
-'use client';
+import React from "react";
+import Link from "next/link";
+import type { Metadata } from "next";
 
-import Link from 'next/link';
-import { useState } from 'react';
+export const metadata: Metadata = {
+  title: "MNP乗り換え完全ガイド | 格安SIM比較 2025",
+  description: "MNP予約番号の取得から回線切替・初期設定・動作確認まで、初めてでも迷わない格安SIM乗り換え手順をステップ別に解説。発信試験 (111 等) の注意点も。",
+};
 
-export default function MnpGuidePage() {
-  const [checkedItems, setCheckedItems] = useState<number[]>([]);
-
-  const toggleCheck = (index: number) => {
-    setCheckedItems(prev => 
-      prev.includes(index) 
-        ? prev.filter(i => i !== index)
-        : [...prev, index]
-    );
-  };
-
-  const checklistItems = [
-    '本人確認書類（運転免許証、マイナンバーカード等）',
-    'クレジットカードまたはキャッシュカード',
-    'MNP予約番号（現在の契約先から取得）',
-    'メールアドレス（GmailやYahoo!メール等）',
-    'Wi-Fi環境（eSIM設定時に必要）'
+const Breadcrumbs = () => {
+  const items = [
+    { name: "ホーム", href: "/" },
+    { name: "ガイド", href: "/guide/mnp" },
+    { name: "MNP乗り換え", href: "/guide/mnp" },
   ];
-
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: items.map((item, idx) => ({
+      '@type': 'ListItem',
+      position: idx + 1,
+      name: item.name,
+      item: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://example.com'}${item.href}`
+    })),
+  };
   return (
-    <div className="min-h-screen bg-white">
-      {/* Header */}
-      <header className="bg-white shadow-sm border-b">
-        <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center">
-              <Link href="/" className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">格安SIM比較</Link>
-            </div>
-            <div className="hidden md:block">
-              <div className="ml-10 flex items-baseline space-x-4">
-                <Link href="/compare" className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">
-                  料金比較
-                </Link>
-                <Link href="/guide/mnp" className="text-blue-600 px-3 py-2 rounded-md text-sm font-medium">
-                  乗り換え手順
-                </Link>
-                <Link href="/guide/esim" className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">
-                  eSIM設定
-                </Link>
-                <Link href="/faq" className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">
-                  よくある質問
-                </Link>
-              </div>
-            </div>
-          </div>
-        </nav>
-      </header>
+    <nav aria-label="パンくず" className="text-sm text-gray-500 mb-6">
+      <ol className="flex flex-wrap gap-1 items-center">
+        {items.map((b, i) => (
+          <li key={b.href} className="flex items-center">
+            {i > 0 && <span className="mx-1">/</span>}
+            <Link href={b.href} className="hover:text-gray-900 underline-offset-2 hover:underline">{b.name}</Link>
+          </li>
+        ))}
+      </ol>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+    </nav>
+  );
+};
 
-      {/* Breadcrumb */}
-      <div className="bg-gray-50 py-4">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <nav className="text-sm">
-            <Link href="/" className="text-gray-500 hover:text-blue-600">ホーム</Link>
-            <span className="text-gray-400 mx-2">/</span>
-            <span className="text-gray-900">MNP乗り換え完全手順</span>
-          </nav>
-        </div>
+const StepCard = ({ num, title, children, color = "blue" }: { num: number; title: string; children: React.ReactNode; color?: string }) => {
+  const base = color === 'blue' ? 'from-blue-500 to-indigo-500' : color === 'green' ? 'from-green-500 to-emerald-500' : 'from-gray-500 to-gray-700';
+  return (
+    <div className="relative bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
+      <div className={`absolute -top-4 -left-4 w-12 h-12 rounded-xl bg-gradient-to-br ${base} text-white flex items-center justify-center font-bold text-lg shadow`}>{num}</div>
+      <h3 className="font-semibold text-xl mb-4 pl-10">{title}</h3>
+      <div className="text-gray-700 leading-relaxed text-sm md:text-base space-y-3">
+        {children}
       </div>
-
-      {/* Hero Section */}
-      <section className="py-16 bg-gradient-to-br from-green-50 to-blue-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl font-bold text-gray-900 mb-6">
-            MNP乗り換え完全手順
-            <br />
-            <span className="text-green-600">失敗しない5ステップ</span>
-          </h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
-            電話番号そのままで格安SIMに乗り換える手順を詳しく解説。
-            事前準備から開通まで、つまずきやすいポイントも含めて分かりやすく説明します。
-          </p>
-          
-          {/* 5ステップ要約 */}
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-4 max-w-5xl mx-auto">
-            <div className="bg-white p-4 rounded-lg shadow-md">
-              <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-2">
-                <span className="text-green-600 font-bold">1</span>
-              </div>
-              <h3 className="font-semibold text-sm">事前準備</h3>
-            </div>
-            <div className="bg-white p-4 rounded-lg shadow-md">
-              <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-2">
-                <span className="text-green-600 font-bold">2</span>
-              </div>
-              <h3 className="font-semibold text-sm">MNP予約番号取得</h3>
-            </div>
-            <div className="bg-white p-4 rounded-lg shadow-md">
-              <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-2">
-                <span className="text-green-600 font-bold">3</span>
-              </div>
-              <h3 className="font-semibold text-sm">格安SIM申込</h3>
-            </div>
-            <div className="bg-white p-4 rounded-lg shadow-md">
-              <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-2">
-                <span className="text-green-600 font-bold">4</span>
-              </div>
-              <h3 className="font-semibold text-sm">回線切替・設定</h3>
-            </div>
-            <div className="bg-white p-4 rounded-lg shadow-md">
-              <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-2">
-                <span className="text-green-600 font-bold">5</span>
-              </div>
-              <h3 className="font-semibold text-sm">利用開始</h3>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Checklist */}
-      <section className="py-16 bg-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">
-            <i className="ri-checkbox-line text-green-600 mr-3"></i>
-            乗り換え前チェックリスト
-          </h2>
-          
-          <div className="bg-blue-50 border border-blue-200 rounded-xl p-6 mb-8">
-            <h3 className="font-bold text-lg mb-4 text-blue-900">必要なものを確認しましょう</h3>
-            <div className="space-y-3">
-              {checklistItems.map((item, index) => (
-                <label key={index} className="flex items-start cursor-pointer">
-                  <input
-                    type="checkbox"
-                    checked={checkedItems.includes(index)}
-                    onChange={() => toggleCheck(index)}
-                    className="mt-1 mr-3 cursor-pointer"
-                  />
-                  <span className={checkedItems.includes(index) ? 'line-through text-gray-500' : 'text-gray-800'}>
-                    {item}
-                  </span>
-                </label>
-              ))}
-            </div>
-            {checkedItems.length === checklistItems.length && (
-              <div className="mt-4 p-4 bg-green-100 border border-green-300 rounded-lg">
-                <p className="text-green-800 font-semibold">
-                  <i className="ri-check-line mr-2"></i>
-                  準備完了！乗り換え手続きを開始できます
-                </p>
-              </div>
-            )}
-          </div>
-        </div>
-      </section>
-
-      {/* Step 1: 事前準備 */}
-      <section className="py-16 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center mb-8">
-            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mr-4">
-              <span className="text-green-600 font-bold text-2xl">1</span>
-            </div>
-            <h2 className="text-3xl font-bold text-gray-900">事前準備</h2>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <div>
-              <h3 className="text-xl font-bold mb-4">現在の契約内容を確認</h3>
-              <div className="space-y-4">
-                <div className="bg-white p-6 rounded-lg border">
-                  <h4 className="font-semibold mb-2">契約解除料・違約金</h4>
-                  <p className="text-sm text-gray-600 mb-2">
-                    2022年4月以降は大手キャリアの違約金が大幅に減額されていますが、古いプランでは高額な場合があります。
-                  </p>
-                  <div className="text-xs space-y-1">
-                    <p><strong>ドコモ：</strong> 1,100円（2021年10月以降のプラン）</p>
-                    <p><strong>au：</strong> 1,100円（2022年4月以降のプラン）</p>
-                    <p><strong>ソフトバンク：</strong> 1,100円（2022年2月以降のプラン）</p>
-                  </div>
-                </div>
-                
-                <div className="bg-white p-6 rounded-lg border">
-                  <h4 className="font-semibold mb-2">端末の分割払い残債</h4>
-                  <p className="text-sm text-gray-600">
-                    解約後も分割払いは継続されます。一括精算も可能ですが、継続払いが一般的です。
-                  </p>
-                </div>
-
-                <div className="bg-white p-6 rounded-lg border">
-                  <h4 className="font-semibold mb-2">更新月の確認</h4>
-                  <p className="text-sm text-gray-600">
-                    古い2年契約プランの場合、更新月以外の解約で違約金が発生する場合があります。
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div>
-              <h3 className="text-xl font-bold mb-4">SIMロック解除</h3>
-              <div className="bg-white p-6 rounded-lg border mb-4">
-                <p className="text-sm text-gray-600 mb-4">
-                  2021年10月以降に発売された端末はSIMフリー化が義務化されていますが、
-                  それ以前の端末は手続きが必要な場合があります。
-                </p>
-                
-                <div className="space-y-3">
-                  <div>
-                    <h4 className="font-semibold text-sm">ドコモ</h4>
-                    <p className="text-xs text-gray-600">My docomo または 151（無料）</p>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-sm">au</h4>
-                    <p className="text-xs text-gray-600">My au または店舗（3,300円）</p>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-sm">ソフトバンク</h4>
-                    <p className="text-xs text-gray-600">My SoftBank または店舗（3,300円）</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-yellow-50 border border-yellow-200 p-4 rounded-lg">
-                <h4 className="font-semibold text-sm text-yellow-800 mb-2">
-                  <i className="ri-alert-line mr-2"></i>
-                  確認方法
-                </h4>
-                <p className="text-xs text-yellow-700">
-                  設定 → 一般 → 情報で「SIMロック」の項目を確認。
-                  「SIMロックなし」と表示されていれば解除済みです。
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Step 2: MNP予約番号取得 */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center mb-8">
-            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mr-4">
-              <span className="text-green-600 font-bold text-2xl">2</span>
-            </div>
-            <h2 className="text-3xl font-bold text-gray-900">MNP予約番号取得</h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-            <div className="bg-blue-50 p-6 rounded-xl border border-blue-200">
-              <h3 className="font-bold text-lg mb-4 text-blue-900">ドコモ</h3>
-              <div className="space-y-2 text-sm">
-                <p><strong>Web：</strong> My docomo（24時間）</p>
-                <p><strong>電話：</strong> 151（9:00-20:00）</p>
-                <p><strong>店舗：</strong> ドコモショップ</p>
-                <p className="text-blue-700 font-semibold">手数料：無料</p>
-              </div>
-            </div>
-
-            <div className="bg-orange-50 p-6 rounded-xl border border-orange-200">
-              <h3 className="font-bold text-lg mb-4 text-orange-900">au</h3>
-              <div className="space-y-2 text-sm">
-                <p><strong>Web：</strong> My au（9:00-21:30）</p>
-                <p><strong>電話：</strong> 0077-75470（9:00-20:00）</p>
-                <p><strong>店舗：</strong> auショップ</p>
-                <p className="text-orange-700 font-semibold">手数料：無料</p>
-              </div>
-            </div>
-
-            <div className="bg-gray-50 p-6 rounded-xl border border-gray-200">
-              <h3 className="font-bold text-lg mb-4 text-gray-900">ソフトバンク</h3>
-              <div className="space-y-2 text-sm">
-                <p><strong>Web：</strong> My SoftBank（9:00-21:30）</p>
-                <p><strong>電話：</strong> *5533（9:00-20:00）</p>
-                <p><strong>店舗：</strong> ソフトバンクショップ</p>
-                <p className="text-gray-700 font-semibold">手数料：無料</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-red-50 border border-red-200 rounded-xl p-6">
-            <h3 className="font-bold text-lg mb-4 text-red-900">
-              <i className="ri-time-line mr-2"></i>
-              MNP予約番号の注意点
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
-              <div>
-                <h4 className="font-semibold mb-2">有効期限</h4>
-                <ul className="space-y-1 text-red-800">
-                  <li>• 発行から15日間有効</li>
-                  <li>• 格安SIM申込時は10日以上残存が必要</li>
-                  <li>• 期限切れの場合は再取得（無料）</li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="font-semibold mb-2">取得タイミング</h4>
-                <ul className="space-y-1 text-red-800">
-                  <li>• 申込直前に取得するのがベスト</li>
-                  <li>• 月末近くは避ける（混雑のため）</li>
-                  <li>• 土日祝日は窓口が混雑</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Step 3: 申込 */}
-      <section className="py-16 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center mb-8">
-            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mr-4">
-              <span className="text-green-600 font-bold text-2xl">3</span>
-            </div>
-            <h2 className="text-3xl font-bold text-gray-900">格安SIM申込</h2>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <div>
-              <h3 className="text-xl font-bold mb-6">申込の流れ</h3>
-              <div className="space-y-4">
-                <div className="bg-white p-6 rounded-lg border">
-                  <div className="flex items-center mb-3">
-                    <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mr-3">
-                      <span className="text-blue-600 font-bold text-sm">1</span>
-                    </div>
-                    <h4 className="font-semibold">プラン選択</h4>
-                  </div>
-                  <p className="text-sm text-gray-600 ml-11">
-                    データ容量、通話オプション、SIMタイプ（物理SIM/eSIM）を選択
-                  </p>
-                </div>
-
-                <div className="bg-white p-6 rounded-lg border">
-                  <div className="flex items-center mb-3">
-                    <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mr-3">
-                      <span className="text-blue-600 font-bold text-sm">2</span>
-                    </div>
-                    <h4 className="font-semibold">個人情報入力</h4>
-                  </div>
-                  <p className="text-sm text-gray-600 ml-11">
-                    氏名、住所、生年月日等を本人確認書類と同じ内容で入力
-                  </p>
-                </div>
-
-                <div className="bg-white p-6 rounded-lg border">
-                  <div className="flex items-center mb-3">
-                    <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mr-3">
-                      <span className="text-blue-600 font-bold text-sm">3</span>
-                    </div>
-                    <h4 className="font-semibold">MNP情報入力</h4>
-                  </div>
-                  <p className="text-sm text-gray-600 ml-11">
-                    MNP予約番号、転出元電話番号、予約番号有効期限を入力
-                  </p>
-                </div>
-
-                <div className="bg-white p-6 rounded-lg border">
-                  <div className="flex items-center mb-3">
-                    <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mr-3">
-                      <span className="text-blue-600 font-bold text-sm">4</span>
-                    </div>
-                    <h4 className="font-semibold">本人確認</h4>
-                  </div>
-                  <p className="text-sm text-gray-600 ml-11">
-                    eKYC（オンライン本人確認）で書類撮影と自撮りを実施
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div>
-              <h3 className="text-xl font-bold mb-6">本人確認書類</h3>
-              <div className="bg-white p-6 rounded-lg border mb-6">
-                <h4 className="font-semibold mb-3 text-green-600">利用可能な書類</h4>
-                <ul className="space-y-2 text-sm">
-                  <li className="flex items-center">
-                    <i className="ri-check-line text-green-500 mr-2"></i>
-                    運転免許証
-                  </li>
-                  <li className="flex items-center">
-                    <i className="ri-check-line text-green-500 mr-2"></i>
-                    マイナンバーカード（個人番号は隠す）
-                  </li>
-                  <li className="flex items-center">
-                    <i className="ri-check-line text-green-500 mr-2"></i>
-                    在留カード（外国籍の方）
-                  </li>
-                  <li className="flex items-center">
-                    <i className="ri-check-line text-green-500 mr-2"></i>
-                    住民基本台帳カード（写真付き）
-                  </li>
-                </ul>
-              </div>
-
-              <div className="bg-yellow-50 border border-yellow-200 p-4 rounded-lg">
-                <h4 className="font-semibold text-sm text-yellow-800 mb-2">
-                  <i className="ri-alert-line mr-2"></i>
-                  eKYC撮影のコツ
-                </h4>
-                <ul className="text-xs space-y-1 text-yellow-700">
-                  <li>• 明るい場所で撮影する</li>
-                  <li>• 書類全体が画面に収まるようにする</li>
-                  <li>• 反射や影がないように注意</li>
-                  <li>• 自撮りは正面を向いて撮影</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Step 4: 回線切替 */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center mb-8">
-            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mr-4">
-              <span className="text-green-600 font-bold text-2xl">4</span>
-            </div>
-            <h2 className="text-3xl font-bold text-gray-900">回線切替・設定</h2>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-            <div className="bg-blue-50 p-6 rounded-xl border border-blue-200">
-              <h3 className="font-bold text-lg mb-4 text-blue-900">
-                <i className="ri-smartphone-line mr-2"></i>
-                eSIMの場合
-              </h3>
-              <ol className="space-y-3 text-sm">
-                <li className="flex">
-                  <span className="bg-blue-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs mr-3 mt-0.5">1</span>
-                  <div>
-                    <p className="font-semibold">審査完了メール確認</p>
-                    <p className="text-blue-800">申込から数時間〜1日程度</p>
-                  </div>
-                </li>
-                <li className="flex">
-                  <span className="bg-blue-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs mr-3 mt-0.5">2</span>
-                  <div>
-                    <p className="font-semibold">eSIMプロファイルDL</p>
-                    <p className="text-blue-800">QRコードまたはSM-DP+で設定</p>
-                  </div>
-                </li>
-                <li className="flex">
-                  <span className="bg-blue-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs mr-3 mt-0.5">3</span>
-                  <div>
-                    <p className="font-semibold">回線切替手続き</p>
-                    <p className="text-blue-800">Webまたは電話で切替実行</p>
-                  </div>
-                </li>
-                <li className="flex">
-                  <span className="bg-blue-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs mr-3 mt-0.5">4</span>
-                  <div>
-                    <p className="font-semibold">APN設定</p>
-                    <p className="text-blue-800">データ通信設定を確認</p>
-                  </div>
-                </li>
-              </ol>
-            </div>
-
-            <div className="bg-gray-50 p-6 rounded-xl border border-gray-200">
-              <h3 className="font-bold text-lg mb-4 text-gray-900">
-                <i className="ri-sim-card-line mr-2"></i>
-                物理SIMの場合
-              </h3>
-              <ol className="space-y-3 text-sm">
-                <li className="flex">
-                  <span className="bg-gray-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs mr-3 mt-0.5">1</span>
-                  <div>
-                    <p className="font-semibold">SIMカード受取</p>
-                    <p className="text-gray-800">申込から2-3日で配送</p>
-                  </div>
-                </li>
-                <li className="flex">
-                  <span className="bg-gray-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs mr-3 mt-0.5">2</span>
-                  <div>
-                    <p className="font-semibold">SIM挿入</p>
-                    <p className="text-gray-800">端末の電源を切ってから作業</p>
-                  </div>
-                </li>
-                <li className="flex">
-                  <span className="bg-gray-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs mr-3 mt-0.5">3</span>
-                  <div>
-                    <p className="font-semibold">回線切替手続き</p>
-                    <p className="text-gray-800">Webまたは電話で切替実行</p>
-                  </div>
-                </li>
-                <li className="flex">
-                  <span className="bg-gray-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs mr-3 mt-0.5">4</span>
-                  <div>
-                    <p className="font-semibold">APN設定</p>
-                    <p className="text-gray-800">データ通信設定を確認</p>
-                  </div>
-                </li>
-              </ol>
-            </div>
-          </div>
-
-          <div className="bg-red-50 border border-red-200 rounded-xl p-6">
-            <h3 className="font-bold text-lg mb-4 text-red-900">
-              <i className="ri-error-warning-line mr-2"></i>
-              よくあるつまずきポイント
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <h4 className="font-semibold mb-2 text-red-800">eSIM設定時</h4>
-                <ul className="space-y-1 text-sm text-red-700">
-                  <li>• QRコードが読み込めない → 別端末で表示</li>
-                  <li>• プロファイルDL失敗 → Wi-Fi接続を確認</li>
-                  <li>• 既存プロファイル削除忘れ</li>
-                  <li>• SM-DP+アドレスの入力ミス</li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="font-semibold mb-2 text-red-800">共通トラブル</h4>
-                <ul className="space-y-1 text-sm text-red-700">
-                  <li>• APN設定が反映されない</li>
-                  <li>• VoLTE設定がオフになっている</li>
-                  <li>• 回線切替のタイミングが不適切</li>
-                  <li>• 端末の再起動忘れ</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Step 5: 利用開始 */}
-      <section className="py-16 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center mb-8">
-            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mr-4">
-              <span className="text-green-600 font-bold text-2xl">5</span>
-            </div>
-            <h2 className="text-3xl font-bold text-gray-900">利用開始・確認</h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-            <div className="bg-white p-6 rounded-xl">
-              <h3 className="font-bold text-lg mb-4 text-green-600">
-                <i className="ri-phone-line mr-2"></i>
-                通話テスト
-              </h3>
-              <ul className="space-y-2 text-sm">
-                <li>• 発信テスト（111等）</li>
-                <li>• 着信テスト</li>
-                <li>• SMS送受信確認</li>
-                <li>• 緊急通報（テストは111）</li>
-              </ul>
-            </div>
-
-            <div className="bg-white p-6 rounded-xl">
-              <h3 className="font-bold text-lg mb-4 text-blue-600">
-                <i className="ri-wifi-line mr-2"></i>
-                データ通信テスト
-              </h3>
-              <ul className="space-y-2 text-sm">
-                <li>• Webサイト閲覧</li>
-                <li>• アプリのダウンロード</li>
-                <li>• 動画ストリーミング</li>
-                <li>• 速度測定アプリ実行</li>
-              </ul>
-            </div>
-
-            <div className="bg-white p-6 rounded-xl">
-              <h3 className="font-bold text-lg mb-4 text-purple-600">
-                <i className="ri-settings-line mr-2"></i>
-                各種設定・移行
-              </h3>
-              <ul className="space-y-2 text-sm">
-                <li>• マイページ登録</li>
-                <li>• アプリインストール</li>
-                <li>• キャンペーン特典確認</li>
-                <li>• 旧SIM無効化確認</li>
-              </ul>
-            </div>
-          </div>
-
-          <div className="bg-green-50 border border-green-200 rounded-xl p-6 text-center">
-            <h3 className="font-bold text-xl mb-4 text-green-900">
-              <i className="ri-check-double-line mr-3"></i>
-              乗り換え完了おめでとうございます！
-            </h3>
-            <p className="text-green-800 mb-6">
-              これで格安SIMへの乗り換えが完了しました。
-              月々の通信費節約を実感してください。
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link 
-                href="/guide/esim"
-                className="bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors"
-              >
-                eSIM設定ガイドを見る
-              </Link>
-              <Link 
-                href="/faq"
-                className="bg-white text-green-600 border-2 border-green-600 px-6 py-3 rounded-lg font-semibold hover:bg-green-50 transition-colors"
-              >
-                よくある質問を確認
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Troubleshooting */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center text-gray-900 mb-10">
-            <i className="ri-tools-line mr-3 text-orange-500"></i>
-            トラブル対処法
-          </h2>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-red-50 border border-red-200 p-6 rounded-xl">
-              <h3 className="font-bold text-lg mb-4 text-red-800">圏外・電波なし</h3>
-              <div className="space-y-3 text-sm">
-                <div>
-                  <h4 className="font-semibold">考えられる原因</h4>
-                  <ul className="text-red-700 space-y-1 mt-1">
-                    <li>• APN設定の誤り</li>
-                    <li>• 回線切替未完了</li>
-                    <li>• SIM挿入不良</li>
-                  </ul>
-                </div>
-                <div>
-                  <h4 className="font-semibold">対処方法</h4>
-                  <ul className="text-red-700 space-y-1 mt-1">
-                    <li>• APN設定を再確認</li>
-                    <li>• 端末を再起動</li>
-                    <li>• SIM再挿入</li>
-                    <li>• 機内モードON/OFF</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-orange-50 border border-orange-200 p-6 rounded-xl">
-              <h3 className="font-bold text-lg mb-4 text-orange-800">発信できない</h3>
-              <div className="space-y-3 text-sm">
-                <div>
-                  <h4 className="font-semibold">考えられる原因</h4>
-                  <ul className="text-orange-700 space-y-1 mt-1">
-                    <li>• VoLTE設定オフ</li>
-                    <li>• 3G回線設定</li>
-                    <li>• 通話プラン未契約</li>
-                  </ul>
-                </div>
-                <div>
-                  <h4 className="font-semibold">対処方法</h4>
-                  <ul className="text-orange-700 space-y-1 mt-1">
-                    <li>• VoLTE設定をON</li>
-                    <li>• 4G/5G優先に設定</li>
-                    <li>• 契約内容を確認</li>
-                    <li>• 111でテスト発信</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-blue-50 border border-blue-200 p-6 rounded-xl">
-              <h3 className="font-bold text-lg mb-4 text-blue-800">データ通信できない</h3>
-              <div className="space-y-3 text-sm">
-                <div>
-                  <h4 className="font-semibold">考えられる原因</h4>
-                  <ul className="text-blue-700 space-y-1 mt-1">
-                    <li>• APN設定間違い</li>
-                    <li>• モバイルデータOFF</li>
-                    <li>• データ容量超過</li>
-                  </ul>
-                </div>
-                <div>
-                  <h4 className="font-semibold">対処方法</h4>
-                  <ul className="text-blue-700 space-y-1 mt-1">
-                    <li>• APN設定を再設定</li>
-                    <li>• モバイルデータ確認</li>
-                    <li>• 使用量をチェック</li>
-                    <li>• Wi-Fi切断して確認</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="mt-8 text-center">
-            <div className="bg-gray-100 p-6 rounded-xl">
-              <h3 className="font-semibold text-lg mb-2">それでも解決しない場合</h3>
-              <p className="text-gray-600 mb-4">
-                各格安SIM会社のサポートセンターにお問い合わせください。
-                契約者情報を用意してからご連絡いただくとスムーズです。
-              </p>
-              <Link 
-                href="/faq"
-                className="inline-flex items-center text-blue-600 hover:text-blue-700 font-semibold"
-              >
-                よくある質問を確認する
-                <i className="ri-arrow-right-line ml-2"></i>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-16 bg-green-600 text-white">
-        <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold mb-4">
-            格安SIM乗り換えの準備はOK？
-          </h2>
-          <p className="text-xl mb-8 opacity-90">
-            最適なプランを見つけて、今すぐ申し込もう
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link 
-              href="/compare"
-              className="bg-white text-green-600 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-100 transition-colors whitespace-nowrap"
-            >
-              プランを比較する
-            </Link>
-            <Link 
-              href="/guide/esim"
-              className="bg-green-700 text-white border-2 border-green-400 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-green-800 transition-colors whitespace-nowrap"
-            >
-              eSIM設定ガイド
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div>
-              <h3 className="text-xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-4">格安SIM比較</h3>
-              <p className="text-gray-400 text-sm">
-                格安SIM・eSIM乗り換えの専門比較サイト。
-                最新の料金情報とキャンペーンをお届けします。
-              </p>
-            </div>
-            <div>
-              <h4 className="font-semibold mb-4">比較・診断</h4>
-              <ul className="space-y-2 text-sm">
-                <li><Link href="/compare" className="text-gray-400 hover:text-white">料金比較</Link></li>
-                <li><Link href="/compare?category=popular" className="text-gray-400 hover:text-white">人気ランキング</Link></li>
-                <li><Link href="/compare?category=cheapest" className="text-gray-400 hover:text-white">最安プラン</Link></li>
-                <li><Link href="/compare?category=esim" className="text-gray-400 hover:text-white">eSIM対応</Link></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-semibold mb-4">ガイド</h4>
-              <ul className="space-y-2 text-sm">
-                <li><Link href="/guide/mnp" className="text-gray-400 hover:text-white">MNP乗り換え手順</Link></li>
-                <li><Link href="/guide/esim" className="text-gray-400 hover:text-white">eSIM設定方法</Link></li>
-                <li><Link href="/faq" className="text-gray-400 hover:text-white">よくある質問</Link></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-semibold mb-4">サイト情報</h4>
-              <ul className="space-y-2 text-sm">
-                <li><Link href="/policy" className="text-gray-400 hover:text-white">運営ポリシー</Link></li>
-                <li><Link href="/policy" className="text-gray-400 hover:text-white">プライバシーポリシー</Link></li>
-                <li><Link href="/policy" className="text-gray-400 hover:text-white">広告ポリシー</Link></li>
-              </ul>
-            </div>
-          </div>
-          <div className="border-t border-gray-800 mt-8 pt-8 text-center">
-            <p className="text-sm text-gray-400">
-              © 2025 格安SIM比較. All rights reserved. 
-              <br />
-              当サイトは広告・PRを含みます。最新の料金・特典は各公式サイトをご確認ください。
-            </p>
-          </div>
-        </div>
-      </footer>
     </div>
+  );
+};
+
+export default function MNPGuidePage() {
+  return (
+    <main className="min-h-screen bg-gradient-to-b from-white to-blue-50">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <Breadcrumbs />
+        <header className="mb-14">
+          <div className="inline-flex items-center px-3 py-1 rounded-full bg-blue-100 text-blue-700 text-xs font-medium mb-4">MNPガイド 2025</div>
+          <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-gray-900 mb-4">
+            初めてでも迷わない <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">MNP乗り換え完全手順</span>
+          </h1>
+          <p className="text-gray-600 text-base md:text-lg leading-relaxed max-w-3xl">
+            現在の電話番号そのままで、最短で当日中に格安SIMへ切り替えるための実践ガイド。<br className="hidden sm:block" />
+            予約番号の取得から回線切替・初期APN/eSIM設定・動作確認まで、必要な要点だけを凝縮しています。
+          </p>
+          <div className="mt-6 bg-white/60 backdrop-blur border border-blue-100 rounded-lg p-4 flex flex-col sm:flex-row gap-4">
+            <div className="flex-1 text-sm text-gray-700">
+              乗り換え準備の段階で<br className="sm:hidden" />契約者名義/支払い方法/端末SIMロック<br className="sm:hidden" />/メール・認証アプリ移行を先に確認しておくと切替がスムーズです。
+            </div>
+            <div className="flex items-center gap-3 text-xs text-gray-500">
+              <span className="px-2 py-1 rounded bg-blue-50 text-blue-600 font-medium">目安: 45〜90分</span>
+              <span className="px-2 py-1 rounded bg-indigo-50 text-indigo-600 font-medium">切替停止: 5〜30分</span>
+            </div>
+          </div>
+        </header>
+
+        <section className="grid md:grid-cols-2 gap-6 mb-16" aria-label="全体の流れ">
+          <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm">
+            <h2 className="font-semibold text-lg mb-4 flex items-center gap-2"><span className="text-blue-600">⏱</span> 所要時間の目安</h2>
+            <ul className="space-y-2 text-sm text-gray-700">
+              <li>Step1: 予約番号取得 5〜15分（Web / アプリ）</li>
+              <li>Step2: 申込み入力 10〜20分</li>
+              <li>Step3: SIM/eSIM到着 0日（即時）〜3日</li>
+              <li>Step4: 回線切替 5〜30分（混雑で延びる場合あり）</li>
+              <li>Step5: 設定/動作確認 10〜25分</li>
+            </ul>
+          </div>
+          <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm">
+            <h2 className="font-semibold text-lg mb-4 flex items-center gap-2"><span className="text-green-600">✔</span> チェックポイント</h2>
+            <ul className="space-y-2 text-sm text-gray-700 list-disc pl-5">
+              <li>支払い方法と本人確認書類を手元に</li>
+              <li>旧端末のメール（キャリア）/認証アプリ移行</li>
+              <li>端末SIMロック解除（不要の場合あり）</li>
+              <li>データバックアップ完了</li>
+              <li>発信試験番号 111 等で動作確認（緊急通報は発信しない）</li>
+            </ul>
+          </div>
+        </section>
+
+        <div className="space-y-14">
+          <StepCard num={1} title="MNP予約番号を取得する">
+            <p>
+              現在契約中のキャリア (例: ドコモ / au / ソフトバンク / 楽天モバイル 等) の公式サイト・アプリ・電話窓口から <strong>MNP予約番号</strong> を発行します。
+            </p>
+            <ul className="list-disc pl-5 space-y-1">
+              <li>有効期限は通常 <strong>15日</strong>（取得直後に申込みへ進むと安全）</li>
+              <li>即時発行: Web / アプリ（深夜メンテ時間帯は不可）</li>
+              <li>電話発行: オペレータ引き止めトークあり</li>
+            </ul>
+            <p className="text-xs text-gray-500">※ 予約番号を取得しても旧回線はまだ解約されません。切替完了まで引き続き利用可能です。</p>
+          </StepCard>
+
+          <StepCard num={2} title="乗り換え先を申込み (物理SIM / eSIM)">
+            <p>
+              比較ページ (<Link href="/compare" className="text-blue-600 underline">料金比較</Link>) を参考にプラン/データ量/通話オプションを選び申込みます。
+            </p>
+            <ul className="list-disc pl-5 space-y-1">
+              <li>MNP予約番号 / 有効期限 / 電話番号 を正確に入力</li>
+              <li>eKYC (本人確認): eSIM即時発行型はブラウザ or アプリで数分</li>
+              <li>物理SIM: 最短翌日〜3日で到着（地域差あり）</li>
+            </ul>
+            <p className="text-xs text-gray-500">※ MNP有効期限残り <strong>7日未満</strong> になると再取得が必要になる事があります。</p>
+          </StepCard>
+
+          <StepCard num={3} title="SIM受取 / eSIMプロファイル有効化">
+            <p>物理SIMの場合は到着を待ち、端末の電源を切ってから差し替えます。eSIMの場合は申込完了後すぐにプロファイルのダウンロード/インストールへ進みます。</p>
+            <ul className="list-disc pl-5 space-y-1">
+              <li>iPhone: 設定 &gt; モバイル通信 &gt; eSIM追加 (QR / 手動コード)</li>
+              <li>Android: 設定 &gt; ネットワークとインターネット &gt; SIM &gt; eSIM追加</li>
+              <li>複数回線併用時は名称変更 (例: メイン/サブ)</li>
+            </ul>
+            <p className="text-xs text-gray-500">※ プロファイル追加後も切替完了前は旧回線が主回線として残る場合があります。</p>
+          </StepCard>
+
+          <StepCard num={4} title="回線切替 (MNP転入完了処理)" color="green">
+            <p>
+              事業者が案内する <strong>マイページ / 専用切替ボタン / 自動ダイヤル (例: 0037-68-xxxx)</strong> などで回線切替を実行します。完了まで数分〜30分程度、稀に混雑で遅延することがあります。
+            </p>
+            <ul className="list-disc pl-5 space-y-1">
+              <li>切替中は一時的に発着信/データ通信が不可になる時間帯あり</li>
+              <li>電波掴まない場合は 機内モード ON/OFF または再起動</li>
+              <li>ステータスが変わらない場合はサポートチャット/問い合わせ</li>
+            </ul>
+            <p className="text-xs text-gray-500">※ 旧回線は切替完了をもって自動解約されます (違約金/端末残債の精算は後日請求)。</p>
+          </StepCard>
+
+          <StepCard num={5} title="APN/eSIM設定 & 動作確認" color="green">
+            <p>回線切替後にデータ通信・音声通話・SMS/認証コードが正常か確認します。</p>
+            <ul className="list-disc pl-5 space-y-1">
+              <li>APN自動構成されない場合: 事業者指定のAPN項目を追加</li>
+              <li>キャリアメール利用不可 → 代替: Gmail / Outlook 等へ移行</li>
+              <li>認証系 (銀行 / 決済 / SNS) のSMS受信テスト</li>
+              <li>発信試験: <strong>111</strong> 等の試験番号（提供されている場合）へ短時間発信し通話確立のみ確認</li>
+            </ul>
+            <div className="mt-4 border border-blue-200 bg-blue-50 rounded-lg p-4 text-xs text-blue-800 space-y-2">
+              <p className="font-semibold">動作確認の注意</p>
+              <ul className="list-disc pl-5 space-y-1">
+                <li>緊急通報番号 (110/118/119 等) でのテスト発信は行わない</li>
+                <li>発信試験番号は提供事業者・地域により異なり未提供の場合もある</li>
+                <li>長時間の無音接続は避け短時間で切る</li>
+              </ul>
+              <p>不通時は: SIM再挿入 / 機内モード切替 / 端末再起動 / APN再確認 → 改善しなければサポートへログ参照を依頼。</p>
+            </div>
+          </StepCard>
+        </div>
+
+        <section className="mt-20" aria-labelledby="faq-heading">
+          <h2 id="faq-heading" className="text-2xl font-bold mb-6 text-gray-900">よくある質問 (抜粋)</h2>
+          <div className="divide-y divide-gray-200 bg-white border border-gray-200 rounded-xl overflow-hidden">
+            <details className="group" open>
+              <summary className="flex items-center justify-between cursor-pointer px-5 py-4 font-medium text-gray-800">
+                MNP予約番号を取得しただけで旧回線は解約されますか？
+                <span className="ml-4 text-blue-500 group-open:rotate-180 transition-transform">⌄</span>
+              </summary>
+              <div className="px-5 pb-5 text-sm text-gray-700 bg-blue-50/40">
+                いいえ。実際に乗り換え先で回線切替 (転入完了) 処理を行うまで旧回線は継続します。
+              </div>
+            </details>
+            <details className="group">
+              <summary className="flex items-center justify-between cursor-pointer px-5 py-4 font-medium text-gray-800">
+                切替後に圏外になる / データ通信できない
+                <span className="ml-4 text-blue-500 group-open:rotate-180 transition-transform">⌄</span>
+              </summary>
+              <div className="px-5 pb-5 text-sm text-gray-700 bg-blue-50/40 space-y-2">
+                <p>以下を順に確認してください:</p>
+                <ul className="list-disc pl-5 space-y-1">
+                  <li>機内モード ON→OFF</li>
+                  <li>端末再起動</li>
+                  <li>APN設定 (手動入力漏れ)</li>
+                  <li>eSIMプロファイルが有効 (不要な旧プロファイル無効化)</li>
+                </ul>
+              </div>
+            </details>
+            <details className="group">
+              <summary className="flex items-center justify-between cursor-pointer px-5 py-4 font-medium text-gray-800">
+                発信試験番号とは？
+                <span className="ml-4 text-blue-500 group-open:rotate-180 transition-transform">⌄</span>
+              </summary>
+              <div className="px-5 pb-5 text-sm text-gray-700 bg-blue-50/40 space-y-2">
+                <p>事業者が通話接続テスト用に用意している番号です (例: 111 等)。提供されていない事業者もあります。緊急通報でのテストは絶対に行わないでください。</p>
+              </div>
+            </details>
+          </div>
+          <div className="text-right mt-4">
+            <Link href="/faq" className="text-sm text-blue-600 underline">FAQをもっと見る →</Link>
+          </div>
+        </section>
+
+        <aside className="mt-20 bg-gradient-to-r from-indigo-600 to-blue-600 text-white rounded-2xl p-10 shadow-lg">
+          <h2 className="text-2xl font-bold mb-4">次は料金を比較しましょう</h2>
+            <p className="text-indigo-50 mb-6 max-w-2xl">主要な格安SIMの月額・データ量・キャンペーンを一画面で見比べできます。カテゴリ絞込やeSIM対応フィルタも利用できます。</p>
+            <Link href="/compare" className="inline-flex items-center gap-2 bg-white text-indigo-700 font-semibold px-6 py-3 rounded-lg shadow hover:bg-indigo-50 transition" aria-label="料金比較ページへ">
+              料金比較ページへ <span>→</span>
+            </Link>
+        </aside>
+      </div>
+    </main>
   );
 }

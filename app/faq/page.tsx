@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 
 export default function FaqPage() {
   const [openItems, setOpenItems] = useState<number[]>([]);
@@ -132,34 +132,40 @@ export default function FaqPage() {
     }
   ];
 
+  // FAQPage 構造化データ (JSON-LD) を生成
+  const faqSchema = useMemo(() => ({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqCategories.flatMap(cat => cat.faqs.map(faq => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: faq.answer
+      }
+    })))
+  }), [faqCategories]);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50">
-      {/* Header */}
-      <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-200 shadow-sm">
-        <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center space-x-8">
-              <Link href="/" className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                格安SIM比較
-              </Link>
-              <div className="hidden md:flex space-x-6">
-                <Link href="/compare" className="text-gray-700 hover:text-blue-600 font-medium transition-colors">
-                  プラン比較
-                </Link>
-                <Link href="/guide/mnp" className="text-gray-700 hover:text-blue-600 font-medium transition-colors">
-                  乗り換えガイド
-                </Link>
-                <Link href="/guide/esim" className="text-gray-700 hover:text-blue-600 font-medium transition-colors">
-                  eSIM設定
-                </Link>
-                <Link href="/faq" className="text-blue-600 font-medium">
-                  FAQ
-                </Link>
-              </div>
-            </div>
-          </div>
-        </nav>
-      </header>
+      {/* JSON-LD Structured Data (FAQ + Breadcrumb) */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+              { '@type': 'ListItem', position: 1, name: 'ホーム', item: 'https://example.com/' },
+              { '@type': 'ListItem', position: 2, name: 'よくある質問', item: 'https://example.com/faq' }
+            ]
+          })
+        }}
+      />
 
       {/* Breadcrumb */}
       <div className="bg-white py-4 border-b">
@@ -221,6 +227,7 @@ export default function FaqPage() {
                 {category.faqs.map((faq, faqIndex) => {
                   const globalIndex = categoryIndex * 1000 + faqIndex;
                   const isOpen = openItems.includes(globalIndex);
+                  const answerId = `faq-answer-${globalIndex}`;
                   
                   return (
                     <div
@@ -230,6 +237,9 @@ export default function FaqPage() {
                       <button
                         onClick={() => toggleItem(globalIndex)}
                         className="w-full p-6 lg:p-8 text-left hover:bg-gray-50 transition-colors duration-200 flex items-center justify-between"
+                        aria-expanded={isOpen}
+                        aria-controls={answerId}
+                        type="button"
                       >
                         <div className="flex items-start">
                           <div className={`flex-shrink-0 w-10 h-10 bg-gradient-to-r from-${category.color}-500 to-${category.color}-600 rounded-full flex items-center justify-center mr-4 mt-1`}>
@@ -245,12 +255,12 @@ export default function FaqPage() {
                       </button>
                       
                       {isOpen && (
-                        <div className="px-6 lg:px-8 pb-6 lg:pb-8">
+                        <div id={answerId} role="region" aria-labelledby={answerId + '-label'} className="px-6 lg:px-8 pb-6 lg:pb-8">
                           <div className="ml-14">
                             <div className={`w-8 h-8 bg-gradient-to-r from-${category.color}-400 to-${category.color}-500 rounded-full flex items-center justify-center mb-4`}>
                               <span className="text-white font-bold text-sm">A</span>
                             </div>
-                            <div className="prose prose-lg max-w-none">
+                            <div className="prose prose-lg max-w-none" id={answerId + '-label'}>
                               <p className="text-gray-700 leading-relaxed">{faq.answer}</p>
                             </div>
                           </div>
@@ -309,47 +319,7 @@ export default function FaqPage() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-gradient-to-r from-gray-900 via-blue-900 to-purple-900 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-          <div className="grid md:grid-cols-4 gap-8">
-            <div className="md:col-span-2">
-              <h3 className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-4">
-                格安SIM完全比較ガイド
-              </h3>
-              <p className="text-gray-300 mb-6 leading-relaxed">
-                50万人が利用する格安SIM比較サイト。最新の料金プラン、通信速度、キャンペーン情報を毎日更新。
-                あなたに最適な格安SIMを見つけて、通信費を大幅に削減しましょう。
-              </p>
-            </div>
-            
-            <div>
-              <h4 className="font-semibold mb-4">サービス</h4>
-              <ul className="space-y-2 text-gray-300">
-                <li><Link href="/compare" className="hover:text-blue-400 transition-colors">プラン比較</Link></li>
-              </ul>
-            </div>
-            
-            <div>
-              <h4 className="font-semibold mb-4">サポート</h4>
-              <ul className="space-y-2 text-gray-300">
-                <li><Link href="/guide/mnp" className="hover:text-blue-400 transition-colors">乗り換えガイド</Link></li>
-                <li><Link href="/guide/esim" className="hover:text-blue-400 transition-colors">eSIM設定</Link></li>
-                <li><Link href="/faq" className="hover:text-blue-400 transition-colors">よくある質問</Link></li>
-              </ul>
-            </div>
-          </div>
-          
-          <div className="border-t border-gray-700 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
-            <p className="text-gray-400 text-sm">
-              2025 格安SIM完全比較ガイド. All rights reserved.
-            </p>
-            <p className="text-gray-400 text-sm mt-4 md:mt-0">
-              ※最新の料金・特典は各公式サイトをご確認ください
-            </p>
-          </div>
-        </div>
-      </footer>
+  {/* フッターはグローバル layout.tsx に統合 */}
     </div>
   );
 }

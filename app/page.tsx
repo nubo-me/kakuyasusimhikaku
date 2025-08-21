@@ -1,38 +1,38 @@
 'use client';
 
-import { useState } from 'react';
+import AdDisclosure from './components/AdDisclosure';
 import Link from 'next/link';
 
 export default function HomePage() {
-  const [activeTab, setActiveTab] = useState('popular');
-
-  const categories = [
-    { id: 'popular', name: '人気プラン', color: 'from-blue-600 to-purple-600' },
-    { id: 'cheapest', name: '最安プラン', color: 'from-green-500 to-teal-600' },
-    { id: 'unlimited', name: 'かけ放題', color: 'from-orange-500 to-red-500' },
-    { id: 'esim', name: 'eSIM対応', color: 'from-purple-500 to-pink-500' }
-  ];
-
-  const handleCategoryClick = (categoryId: string) => {
-    setActiveTab(categoryId);
-    // スムーズにカテゴリセクションまでスクロール
-    const categorySection = document.getElementById('category-section');
-    if (categorySection) {
-      categorySection.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
+  // カテゴリ別おすすめプランセクションは削除（要望対応）
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50">
+      {/* BreadcrumbList (ホーム単体) */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+              { '@type': 'ListItem', position: 1, name: 'ホーム', item: 'https://example.com/' }
+            ]
+          })
+        }}
+      />
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-gradient-to-r from-slate-900 via-blue-900 to-purple-900">
         <div className="absolute inset-0 bg-[url('https://readdy.ai/api/search-image?query=Abstract%20geometric%20patterns%20with%20flowing%20lines%2C%20modern%20technology%20background%2C%20dark%20blue%20and%20purple%20gradients%2C%20minimalist%20design%2C%20professional%20corporate%20style%2C%20subtle%20lighting%20effects%2C%20clean%20composition&width=1920&height=800&seq=hero-bg&orientation=landscape')] bg-cover bg-center opacity-20"></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="text-white">
-              <div className="inline-flex items-center px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 mb-6">
+              <div className="inline-flex items-center px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 mb-4">
                 <i className="ri-award-line text-yellow-400 mr-2"></i>
-                <span className="text-sm font-medium">2024年度格安SIM満足度No.1サイト</span>
+                <span className="text-sm font-medium">2025年最新 中立比較ガイド</span>
+              </div>
+              <div className="mb-6">
+                <AdDisclosure variant="dark" compact />
               </div>
 
               <h1 className="text-5xl lg:text-6xl font-bold mb-6 leading-tight">
@@ -44,9 +44,9 @@ export default function HomePage() {
               </h1>
 
               <p className="text-xl text-blue-100 mb-8 leading-relaxed">
-                月額990円〜で通信費を大幅削減。
+                月額990円〜の主要オンライン専用/格安プランを横断比較。
                 <br />
-                50万人が選んだ最適プランで、年間60,000円の節約を実現。
+                節約目安：月2,000〜4,000円（年24,000〜48,000円）。
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 mb-12">
@@ -62,16 +62,16 @@ export default function HomePage() {
 
               <div className="grid grid-cols-3 gap-6">
                 <div className="text-center">
-                  <div className="text-3xl font-bold text-blue-400 mb-1">50万+</div>
-                  <div className="text-sm text-blue-200">月間利用者数</div>
+                  <div className="text-3xl font-bold text-blue-400 mb-1">主要指標</div>
+                    <div className="text-sm text-blue-200">料金/速度/キャンペーン</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-3xl font-bold text-purple-400 mb-1">98.5%</div>
-                  <div className="text-sm text-purple-200">乗り換え成功率</div>
+                  <div className="text-3xl font-bold text-purple-400 mb-1">比較軸</div>
+                    <div className="text-sm text-purple-200">コスト/利便性</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-3xl font-bold text-green-400 mb-1">¥60,000</div>
-                  <div className="text-sm text-green-200">年間平均節約額</div>
+                  <div className="text-3xl font-bold text-green-400 mb-1">節約目安</div>
+                    <div className="text-sm text-green-200">年24,000〜48,000円</div>
                 </div>
               </div>
             </div>
@@ -159,180 +159,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Category Tabs */}
-      <section id="category-section" className="py-16 bg-white/70 backdrop-blur-sm border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">カテゴリ別おすすめプラン</h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              利用スタイルに合わせて最適なプランを見つけましょう
-            </p>
-          </div>
-
-          <div className="flex flex-wrap justify-center gap-4 mb-12">
-            {categories.map((category) => (
-              <button
-                key={category.id}
-                onClick={() => setActiveTab(category.id)}
-                className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 ${
-                  activeTab === category.id
-                    ? `bg-gradient-to-r ${category.color} text-white shadow-lg transform scale-105`
-                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                }`}
-              >
-                {category.name}
-              </button>
-            ))}
-          </div>
-
-          <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead className="bg-gradient-to-r from-gray-50 to-gray-100">
-                  <tr>
-                    <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">ブランド</th>
-                    <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">プラン</th>
-                    <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">月額料金</th>
-                    <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">実勢月額※1</th>
-                    <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">データ量</th>
-                    <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">eSIM</th>
-                    <th className="px-6 py-4 text-center text-sm font-semibold text-gray-900">申し込み</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-100">
-                  <tr className="hover:bg-blue-50/50 transition-colors duration-200 group">
-                    <td className="px-6 py-6">
-                      <div className="flex items-center">
-                        <div className="w-12 h-12 bg-gradient-to-r from-pink-500 to-red-500 rounded-xl flex items-center justify-center text-white font-bold mr-3">
-                          L
-                        </div>
-                        <div>
-                          <div className="font-semibold text-gray-900">LINEMO</div>
-                          <div className="text-sm text-gray-500">ソフトバンク回線</div>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="px-6 py-6">
-                      <div className="font-medium text-gray-900">ミニプラン</div>
-                      <div className="text-sm text-gray-500">3GB</div>
-                    </td>
-                    <td className="px-6 py-6">
-                      <div className="font-bold text-lg text-gray-900">990円</div>
-                      <div className="text-sm text-gray-500">税込</div>
-                    </td>
-                    <td className="px-6 py-6">
-                      <div className="font-bold text-lg text-green-600">490円</div>
-                      <div className="text-xs text-gray-500">12ヶ月平均</div>
-                    </td>
-                    <td className="px-6 py-6">
-                      <div className="font-medium text-gray-900">3GB</div>
-                      <div className="text-sm text-gray-500">超過後1Mbps</div>
-                    </td>
-                    <td className="px-6 py-6">
-                      <div className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-green-100 text-green-800">
-                        <i className="ri-check-line mr-1"></i>
-                        対応
-                      </div>
-                    </td>
-                    <td className="px-6 py-6 text-center">
-                      <Link href="/brands/linemo" className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-medium rounded-lg transition-all duration-300 transform group-hover:scale-105 whitespace-nowrap">
-                        詳細を見る
-                      </Link>
-                    </td>
-                  </tr>
-
-                  <tr className="hover:bg-blue-50/50 transition-colors duration-200 group">
-                    <td className="px-6 py-6">
-                      <div className="flex items-center">
-                        <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-blue-500 rounded-xl flex items-center justify-center text-white font-bold mr-3">
-                          P
-                        </div>
-                        <div>
-                          <div className="font-semibold text-gray-900">povo2.0</div>
-                          <div className="text-sm text-gray-500">au回線</div>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="px-6 py-6">
-                      <div className="font-medium text-gray-900">データ追加3GB</div>
-                      <div className="text-sm text-gray-500">30日間</div>
-                    </td>
-                    <td className="px-6 py-6">
-                      <div className="font-bold text-lg text-gray-900">990円</div>
-                      <div className="text-sm text-gray-500">税込</div>
-                    </td>
-                    <td className="px-6 py-6">
-                      <div className="font-bold text-lg text-blue-600">990円</div>
-                      <div className="text-xs text-gray-500">トッピング制</div>
-                    </td>
-                    <td className="px-6 py-6">
-                      <div className="font-medium text-gray-900">3GB</div>
-                      <div className="text-sm text-gray-500">30日間有効</div>
-                    </td>
-                    <td className="px-6 py-6">
-                      <div className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-green-100 text-green-800">
-                        <i className="ri-check-line mr-1"></i>
-                        対応
-                      </div>
-                    </td>
-                    <td className="px-6 py-6 text-center">
-                      <Link href="/brands/povo" className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-medium rounded-lg transition-all duration-300 transform group-hover:scale-105 whitespace-nowrap">
-                        詳細を見る
-                      </Link>
-                    </td>
-                  </tr>
-
-                  <tr className="hover:bg-blue-50/50 transition-colors duration-200 group">
-                    <td className="px-6 py-6">
-                      <div className="flex items-center">
-                        <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-cyan-500 rounded-xl flex items-center justify-center text-white font-bold mr-3">
-                          A
-                        </div>
-                        <div>
-                          <div className="font-semibold text-gray-900">ahamo</div>
-                          <div className="text-sm text-gray-500">ドコモ回線</div>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="px-6 py-6">
-                      <div className="font-medium text-gray-900">ahamo</div>
-                      <div className="text-sm text-gray-500">20GB</div>
-                    </td>
-                    <td className="px-6 py-6">
-                      <div className="font-bold text-lg text-gray-900">2,970円</div>
-                      <div className="text-sm text-gray-500">税込</div>
-                    </td>
-                    <td className="px-6 py-6">
-                      <div className="font-bold text-lg text-blue-600">2,970円</div>
-                      <div className="text-xs text-gray-500">割引なし</div>
-                    </td>
-                    <td className="px-6 py-6">
-                      <div className="font-medium text-gray-900">20GB</div>
-                      <div className="text-sm text-gray-500">超過後1Mbps</div>
-                    </td>
-                    <td className="px-6 py-6">
-                      <div className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-green-100 text-green-800">
-                        <i className="ri-check-line mr-1"></i>
-                        対応
-                      </div>
-                    </td>
-                    <td className="px-6 py-6 text-center">
-                      <Link href="/brands/ahamo" className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-medium rounded-lg transition-all duration-300 transform group-hover:scale-105 whitespace-nowrap">
-                        詳細を見る
-                      </Link>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div className="px-6 py-4 bg-gray-50 border-t border-gray-100">
-              <p className="text-sm text-gray-600">
-                ※1 実勢月額：(月額料金×12ヶ月 - キャンペーン割引 + 初期費用) ÷ 12で算出
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+  {/* カテゴリ別おすすめプランセクション削除済み */}
 
       {/* Selection Guide */}
       <section className="py-20 bg-gradient-to-br from-blue-50 via-white to-purple-50">
