@@ -44,6 +44,7 @@ firebase deploy --only hosting
 - 長期キャッシュ: JS/CSS `max-age=31536000, immutable`
 - HTML 短期キャッシュ: 60 秒
 - Permissions-Policy で不要 API を無効化
+ - `output: export` 運用のため Next.js Middleware は未使用（以前の middleware.ts は削除）
 
 ### 今後の改善候補
 - CSP の `style-src 'unsafe-inline'` 排除 (Tailwind JIT の style ハッシュ化検討)
