@@ -135,9 +135,14 @@ export default function RootLayout({
               <p className="text-gray-400 text-sm">
                 2025 格安SIM完全比較ガイド. All rights reserved.
               </p>
-              <p className="text-gray-400 text-sm mt-4 md:mt-0">
-                ※最新の料金・特典は各公式サイトをご確認ください
-              </p>
+              <div className="flex flex-col md:flex-row md:space-x-4 mt-4 md:mt-0">
+                <p className="text-gray-400 text-sm">
+                  最終更新日：2025年8月21日
+                </p>
+                <p className="text-gray-400 text-sm">
+                  ※最新の料金・特典は各公式サイトをご確認ください
+                </p>
+              </div>
             </div>
           </div>
         </footer>

@@ -31,14 +31,14 @@ export default function CompareContent() {
       id: 1,
       brand: 'LINEMO',
       brandColor: 'text-pink-600',
-      plan: 'ミニプラン',
+      plan: 'ベストプラン',
       monthlyPrice: 990,
       initialCost: 0,
       realMonthlyPrice: 490,
-      dataAmount: '3GB',
+      dataAmount: '～10GB',
       callOption: '5分かけ放題：550円',
       esim: true,
-      campaign: '6ヶ月間実質無料',
+      campaign: '通話オプション割引',
       speed: '高速',
       satisfaction: 4.3,
       popular: true,
@@ -69,7 +69,7 @@ export default function CompareContent() {
       monthlyPrice: 2970,
       initialCost: 0,
       realMonthlyPrice: 2470,
-      dataAmount: '20GB',
+      dataAmount: '30GB',
       callOption: '5分かけ放題込み',
       esim: true,
       campaign: 'dポイント還元',
@@ -82,11 +82,11 @@ export default function CompareContent() {
       id: 4,
       brand: 'UQモバイル',
       brandColor: 'text-orange-600',
-      plan: 'コミコミプラン',
-      monthlyPrice: 3278,
+      plan: 'コミコミプランバリュー',
+      monthlyPrice: 3828,
       initialCost: 3850,
-      realMonthlyPrice: 2178,
-      dataAmount: '20GB',
+      realMonthlyPrice: 2728,
+      dataAmount: '35GB',
       callOption: '10分かけ放題込み',
       esim: true,
       campaign: '家族割・auでんきセット割',
@@ -402,6 +402,7 @@ export default function CompareContent() {
             </table>
             <div className="mt-6 space-y-2 text-sm text-gray-500">
               <p>*実質月額 = (月額×12 - キャンペーン割引 + 初期費用) ÷ 12で計算</p>
+              <p>※表示価格は税込み。キャンペーン/割引は実施状況や適用条件により変動します。詳細は各社公式をご確認ください。</p>
               <p>※料金は税込価格です。最新の料金・特典は各公式サイトでご確認ください。</p>
             </div>
           </div>
@@ -421,7 +422,7 @@ export default function CompareContent() {
               </div>
               <div className="space-y-3">
                 <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-                  <span className="font-semibold">LINEMO ミニプラン</span>
+                  <span className="font-semibold">LINEMO ベストプラン</span>
                   <span className="text-green-600 font-bold">490円/月</span>
                 </div>
                 <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
@@ -450,7 +451,7 @@ export default function CompareContent() {
                 </div>
                 <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
                   <span className="font-semibold">UQモバイル</span>
-                  <span className="text-blue-600 font-bold">2,178円/月</span>
+                  <span className="text-blue-600 font-bold">2,728円/月</span>
                 </div>
               </div>
               <Link 

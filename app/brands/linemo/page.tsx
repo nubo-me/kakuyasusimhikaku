@@ -96,23 +96,23 @@ export default function LinemoPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="bg-white border-2 border-pink-200 rounded-xl p-8 relative">
-              <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-red-500 text-white px-4 py-1 rounded-full text-sm font-semibold">
-                人気No.1
+              <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-pink-500 text-white px-4 py-1 rounded-full text-sm font-semibold">
+                おすすめ
               </div>
               <div className="text-center mb-6">
-                <h3 className="text-2xl font-bold text-pink-600 mb-2">ミニプラン</h3>
+                <h3 className="text-2xl font-bold text-pink-600 mb-2">ベストプラン</h3>
                 <div className="text-4xl font-bold text-gray-900 mb-2">990<span className="text-lg">円/月</span></div>
-                <p className="text-gray-600">3GB + 5分かけ放題無料</p>
+                <p className="text-gray-600">～10GB + 通話オプション割引</p>
               </div>
 
               <div className="space-y-4 mb-8">
                 <div className="flex justify-between">
                   <span>データ容量</span>
-                  <span className="font-semibold">3GB</span>
+                  <span className="font-semibold">～10GB</span>
                 </div>
                 <div className="flex justify-between">
-                  <span>5分かけ放題</span>
-                  <span className="font-semibold text-red-600">8ヶ月無料</span>
+                  <span>通話オプション</span>
+                  <span className="font-semibold text-green-600">7ヶ月間割引</span>
                 </div>
                 <div className="flex justify-between">
                   <span>LINEギガフリー</span>
@@ -140,19 +140,23 @@ export default function LinemoPage() {
 
             <div className="bg-white border border-gray-200 rounded-xl p-8">
               <div className="text-center mb-6">
-                <h3 className="text-2xl font-bold text-pink-600 mb-2">スマホプラン</h3>
-                <div className="text-4xl font-bold text-gray-900 mb-2">2,728<span className="text-lg">円/月</span></div>
-                <p className="text-gray-600">20GB + 5分かけ放題無料</p>
+                <h3 className="text-2xl font-bold text-pink-600 mb-2">ベストプランV</h3>
+                <div className="text-4xl font-bold text-gray-900 mb-2">2,970<span className="text-lg">円/月</span></div>
+                <p className="text-gray-600">～30GB + 5分通話込み</p>
               </div>
 
               <div className="space-y-4 mb-8">
                 <div className="flex justify-between">
                   <span>データ容量</span>
-                  <span className="font-semibold">20GB</span>
+                  <span className="font-semibold">～30GB</span>
                 </div>
                 <div className="flex justify-between">
-                  <span>5分かけ放題</span>
-                  <span className="font-semibold text-red-600">8ヶ月無料</span>
+                  <span>データ超過後</span>
+                  <span className="font-semibold">最大1Mbps</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>5分通話</span>
+                  <span className="font-semibold text-green-600">込み</span>
                 </div>
                 <div className="flex justify-between">
                   <span>LINEギガフリー</span>
@@ -182,7 +186,7 @@ export default function LinemoPage() {
           <div className="mt-8 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
             <h4 className="font-semibold text-yellow-800 mb-2">キャンペーン詳細</h4>
             <ul className="text-sm space-y-1 text-yellow-700">
-              <li>• ミニプラン基本料6ヶ月間無料（990円×6ヶ月 = 5,940円おトク）</li>
+              <li>• キャンペーンは時期により内容が変動します。最新情報は公式をご確認ください。</li>
               <li>• 5分かけ放題オプション8ヶ月間無料（550円×8ヶ月 = 4,400円おトク）</li>
               <li>• LINEスタンププレミアムポイントバックキャンペーン</li>
               <li>• PayPayポイント還元（条件達成時）</li>

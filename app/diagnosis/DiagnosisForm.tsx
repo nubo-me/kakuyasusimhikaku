@@ -138,16 +138,16 @@ export default function DiagnosisForm() {
       if (answers.priority === 'price' || answers.budget === 'low') {
         recommended = {
           brand: 'LINEMO',
-          plan: 'ミニプラン',
+          plan: 'ベストプラン',
           monthlyPrice: 990,
           realPrice: 490,
-          dataAmount: '3GB',
+          dataAmount: '～10GB',
           brandColor: 'text-pink-600',
           reasons: [
-            '月3GB以下で最安クラスの料金',
+            '月10GB以下で最安クラスの料金',
             'ソフトバンク回線で通信品質が安定',
             'LINEギガフリーで実質容量アップ',
-            '6ヶ月間基本料無料キャンペーン'
+            '通話オプション割引キャンペーン'
           ]
         };
         alternatives = [
@@ -173,10 +173,10 @@ export default function DiagnosisForm() {
       } else {
         recommended = {
           brand: 'UQモバイル',
-          plan: 'コミコミプラン',
-          monthlyPrice: 3278,
-          realPrice: 2178,
-          dataAmount: '20GB',
+          plan: 'コミコミプランバリュー',
+          monthlyPrice: 3828,
+          realPrice: 2728,
+          dataAmount: '35GB',
           brandColor: 'text-orange-600',
           reasons: [
             '店舗サポートが充実',
@@ -204,7 +204,7 @@ export default function DiagnosisForm() {
           plan: '基本プラン',
           monthlyPrice: 2970,
           realPrice: 2970,
-          dataAmount: '20GB',
+          dataAmount: '30GB',
           brandColor: 'text-green-600',
           reasons: [
             'ドコモ回線で最高レベルの通信品質',
