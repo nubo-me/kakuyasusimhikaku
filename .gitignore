@@ -1,0 +1,12 @@
+node_modules/
+.next/
+out/
+public/
+.firebase/
+firebase-debug.log
+.env.local
+.env
+.env.production
+*.log
+dist/
+coverage/

@@ -1,0 +1,33 @@
+{
+  "hosting": {
+  "public": "dist",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "headers": [
+      {"source": "**/*.@(js|css)", "headers": [{"key": "Cache-Control", "value": "public,max-age=31536000,immutable"}]},
+      {"source": "**/*.html", "headers": [{"key": "Cache-Control", "value": "public,max-age=60"}]},
+      {"source": "**", "headers": [
+        {"key":"Content-Security-Policy","value":"default-src 'self'; script-src 'self' https://www.googletagmanager.com; connect-src 'self' https://firestore.googleapis.com https://www.google-analytics.com https://www.googletagmanager.com; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; font-src 'self' data:; frame-src https://www.youtube.com https://player.vimeo.com; object-src 'none'; base-uri 'self'; form-action 'self'"},
+        {"key":"X-Frame-Options","value":"SAMEORIGIN"},
+        {"key":"X-Content-Type-Options","value":"nosniff"},
+        {"key":"Referrer-Policy","value":"strict-origin-when-cross-origin"},
+        {"key":"Permissions-Policy","value":"geolocation=(), microphone=(), camera=()"}
+      ]}
+    ],
+    "rewrites": [
+      {"source": "/compare", "destination": "/compare.html"},
+      {"source": "/diagnosis", "destination": "/diagnosis.html"},
+      {"source": "/faq", "destination": "/faq.html"},
+      {"source": "/guide/mnp", "destination": "/guide/mnp.html"},
+      {"source": "/guide/esim", "destination": "/guide/esim.html"},
+      {"source": "/policy", "destination": "/policy.html"},
+      {"source": "/brands/linemo", "destination": "/brands/linemo.html"},
+      {"source": "/_not-found", "destination": "/_not-found.html"},
+  {"source": "/404", "destination": "/404.html"},
+      {"source": "**", "destination": "/index.html"}
+    ]
+  }
+}
