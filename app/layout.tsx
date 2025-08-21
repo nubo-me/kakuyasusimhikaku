@@ -29,6 +29,7 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <head>
+        <meta name="google-site-verification" content="OZsbyrb_bv_IxzslODehf7AZLpWlQVfg8SV5EdiaP3U" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" crossOrigin="anonymous" referrerPolicy="no-referrer" />
       </head>
   <body className={`${inter.className} ${notoSansJP.variable} font-sans antialiased`}>
