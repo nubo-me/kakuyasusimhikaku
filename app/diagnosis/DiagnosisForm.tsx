@@ -138,16 +138,16 @@ export default function DiagnosisForm() {
       if (answers.priority === 'price' || answers.budget === 'low') {
         recommended = {
           brand: 'LINEMO',
-          plan: 'ベストプラン',
+          plan: 'ベストプラン（〜10GB）',
           monthlyPrice: 990,
-          realPrice: 490,
-          dataAmount: '～10GB',
+          realPrice: 990,
+          dataAmount: '〜10GB',
           brandColor: 'text-pink-600',
           reasons: [
-            '月10GB以下で最安クラスの料金',
-            'ソフトバンク回線で通信品質が安定',
-            'LINEギガフリーで実質容量アップ',
-            '通話オプション割引キャンペーン'
+            '〜10GB帯でシンプルな税込990円',
+            'ソフトバンク回線で安定した品質',
+            'LINEギガフリーで日常利用に強い',
+            'eSIM対応で即日開通可能'
           ]
         };
         alternatives = [
@@ -158,7 +158,7 @@ export default function DiagnosisForm() {
             realPrice: 990,
             dataAmount: '3GB（30日）',
             brandColor: 'text-purple-600',
-            reason: '使った分だけの従量制で無駄がない'
+            reason: 'トッピングで使う分だけ追加できる'
           },
           {
             brand: 'IIJmio',
@@ -175,14 +175,14 @@ export default function DiagnosisForm() {
           brand: 'UQモバイル',
           plan: 'コミコミプランバリュー',
           monthlyPrice: 3828,
-          realPrice: 2728,
-          dataAmount: '35GB',
+          realPrice: 3828,
+          dataAmount: '35GB + 10分',
           brandColor: 'text-orange-600',
           reasons: [
-            '店舗サポートが充実',
-            '10分かけ放題込みでお得',
-            'au回線で高品質通信',
-            '家族割・セット割でさらに安く'
+            '10分通話込みで35GB',
+            '店舗サポートを利用可能',
+            'au回線で安定した通信',
+            '節約モード併用で容量節約'
           ]
         };
         alternatives = [
@@ -193,7 +193,7 @@ export default function DiagnosisForm() {
             realPrice: 1628,
             dataAmount: '3GB',
             brandColor: 'text-red-600',
-            reason: '店舗サポートあり・家族割適用'
+            reason: '店舗サポートと家族割引利用可'
           }
         ];
       }
@@ -215,28 +215,28 @@ export default function DiagnosisForm() {
         };
         alternatives = [
           {
-            brand: 'UQモバイル',
-            plan: 'コミコミプラン',
-            monthlyPrice: 3278,
-            realPrice: 2178,
-            dataAmount: '20GB',
-            brandColor: 'text-orange-600',
-            reason: '店舗サポート＋au回線品質'
+            brand: 'LINEMO',
+            plan: 'ベストプランV（〜30GB）',
+            monthlyPrice: 2970,
+            realPrice: 2970,
+            dataAmount: '30GB + 5分',
+            brandColor: 'text-pink-600',
+            reason: '5分通話込みでシンプルな30GB'
           }
         ];
       } else {
         recommended = {
           brand: 'LINEMO',
-          plan: 'スマホプラン',
-          monthlyPrice: 2728,
-          realPrice: 1628,
-          dataAmount: '20GB',
+          plan: 'ベストプランV（〜30GB）',
+          monthlyPrice: 2970,
+          realPrice: 2970,
+          dataAmount: '30GB + 5分',
           brandColor: 'text-pink-600',
           reasons: [
-            '20GBで料金が安い',
-            'LINEギガフリーで実質無制限',
-            '6ヶ月間基本料無料',
-            'ソフトバンク回線で高品質'
+            '30GB + 5分通話込みでシンプル',
+            'ソフトバンク回線で安定',
+            'LINEギガフリーでSNS利用に強い',
+            'eSIM対応で即日開通'
           ]
         };
       }
@@ -258,12 +258,12 @@ export default function DiagnosisForm() {
       alternatives = [
         {
           brand: 'UQモバイル',
-          plan: 'コミコミプラン',
-          monthlyPrice: 3278,
-          realPrice: 2178,
-          dataAmount: '20GB',
+          plan: 'トクトクプラン2（条件割引時）',
+          monthlyPrice: 4048,
+          realPrice: 3278,
+          dataAmount: '30GB（〜5GB利用で自動割引）',
           brandColor: 'text-orange-600',
-          reason: '20GBで十分ならより安価'
+          reason: '利用量によって自動割引される柔軟性'
         }
       ];
     }
@@ -272,16 +272,16 @@ export default function DiagnosisForm() {
     if (answers.esim === 'required' && recommended && !['LINEMO', 'ahamo', 'povo2.0', 'UQモバイル'].includes(recommended.brand)) {
       recommended = {
         brand: 'LINEMO',
-        plan: 'ミニプラン',
+        plan: 'ベストプラン（〜10GB）',
         monthlyPrice: 990,
-        realPrice: 490,
-        dataAmount: '3GB',
+        realPrice: 990,
+        dataAmount: '〜10GB',
         brandColor: 'text-pink-600',
         reasons: [
           'eSIM対応で即日開通可能',
-          'ソフトバンク回線で高品質',
+          'ソフトバンク回線で安定',
           'LINEギガフリー対応',
-          '最安クラスの料金'
+          'シンプルで分かりやすい料金'
         ]
       };
     }

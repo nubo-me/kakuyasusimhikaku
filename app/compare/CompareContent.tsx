@@ -67,9 +67,9 @@ export default function CompareContent() {
       carrier: 'LINEMO',
       name: 'ベストプランV',
       dataAllowance: '30GB',
-      price: '2,728円',
-      talkTime: '22円/30秒',
-      features: ['5G対応', 'ソフトバンク品質', 'LINE使い放題', 'PayPayポイント'],
+      price: '2,970円',
+      talkTime: '5分通話込み',
+      features: ['5G対応', 'ソフトバンク品質', 'LINE使い放題'],
       networkQuality: '★★★★★',
       speedThrottling: '1Mbps',
       esimSupport: true,
@@ -79,13 +79,13 @@ export default function CompareContent() {
     },
     {
       carrier: 'LINEMO',
-      name: 'ミニプランV',
-      dataAllowance: '3GB',
+      name: 'ベストプラン（〜10GB）',
+      dataAllowance: '〜10GB',
       price: '990円',
       talkTime: '22円/30秒',
-      features: ['5G対応', 'LINE使い放題', 'PayPayポイント'],
+      features: ['5G対応', 'LINE使い放題'],
       networkQuality: '★★★★★',
-      speedThrottling: '300Kbps',
+      speedThrottling: '300kbps',
       esimSupport: true,
       mnpSupport: true,
       familyDiscount: 'なし',
@@ -151,9 +151,9 @@ export default function CompareContent() {
       carrier: 'povo',
       name: 'povo2.0',
       dataAllowance: 'トッピング制',
-      price: '0円〜',
+      price: '0円（条件あり）',
       talkTime: '22円/30秒',
-      features: ['5G対応', 'au品質', 'トッピング自由', '期間限定トッピング'],
+      features: ['5G対応', 'au品質', 'トッピング自由'],
       networkQuality: '★★★★☆',
       speedThrottling: '128Kbps',
       esimSupport: true,
@@ -175,7 +175,7 @@ export default function CompareContent() {
       case 'budget':
         return plans.filter(plan => 
           parseInt(plan.price.replace(/[^\d]/g, '')) < 1500 || 
-          plan.name === 'ミニプランV' || plan.name === 'ミニミニプラン' || plan.name === 'シンプル2 S'
+          plan.name === 'ベストプラン（〜10GB）' || plan.name === 'ミニミニプラン' || plan.name === 'シンプル2 S'
         );
       case 'medium':
         return plans.filter(plan => {
@@ -276,12 +276,13 @@ export default function CompareContent() {
             <div>
               <h3 className="text-lg font-semibold text-gray-800 mb-2">重視するポイント</h3>
               <ul className="text-gray-600 space-y-1">
-                <li>• 通信品質重視: ahamo、LINEMO</li>
-                <li>• 料金重視: povo、LINEMO ミニプラン</li>
+        <li>• 通信品質重視: ahamo、LINEMO</li>
+        <li>• 料金重視: povo、LINEMO ベストプラン（〜10GB）</li>
                 <li>• 家族割引: UQ mobile、Y!mobile</li>
               </ul>
             </div>
           </div>
+      <p className="text-xs text-gray-500 mt-6">※表示価格は税込。キャンペーン/割引・トッピング条件は時期により変動します。最新情報は各社公式サイトを確認してください。</p>
         </div>
       </div>
     </div>

@@ -42,24 +42,23 @@ export default function LinemoPage() {
             <div>
               <div className="flex items-center mb-4">
                 <span className="text-4xl font-bold text-pink-600">LINEMO</span>
-                <span className="ml-4 bg-red-100 text-red-600 text-sm px-3 py-1 rounded-full font-semibold">最安級</span>
               </div>
               <div className="mb-6">
                 <AdDisclosure variant="plain" compact />
               </div>
               <h1 className="text-3xl font-bold text-gray-900 mb-6">
-                ソフトバンクの高品質回線が
+                ソフトバンク回線をシンプル料金で
                 <br />
-                <span className="text-pink-600">月額990円から</span>
+                <span className="text-pink-600">月額990円（税込）〜</span>
               </h1>
 
               {/* 結論ボックス */}
               <div className="bg-white p-6 rounded-xl border-l-4 border-pink-600 shadow-lg mb-8">
                 <h2 className="font-bold text-lg mb-3 text-gray-900">結論：こんな人におすすめ</h2>
                 <div className="space-y-2 text-sm">
-                  <p><span className="text-green-600 font-semibold">◎ おすすめ：</span> 月3GB以下の軽いユーザー、eSIMで即日開通したい方、ソフトバンク回線重視</p>
-                  <p><span className="text-orange-600 font-semibold">△ 注意点：</span> 大容量プランなし、店舗サポートなし、家族割引なし</p>
-                  <p><span className="text-blue-600 font-semibold">★ 総評：</span> 料金の安さと回線品質のバランスが優秀。ライトユーザーにベストチョイス。</p>
+                  <p><span className="text-green-600 font-semibold">◎ 向いている人：</span> 月10GB以下の利用が中心 / eSIMで素早く開通したい / ソフトバンク回線品質を重視</p>
+                  <p><span className="text-orange-600 font-semibold">△ 注意点：</span> 100GB超など大容量用途には非対応 / 店舗サポートなし / 家族割なし</p>
+                  <p><span className="text-blue-600 font-semibold">★ 概要：</span> シンプルかつ中立的な料金体系でライト〜中容量層をカバー。</p>
                 </div>
               </div>
 
@@ -100,19 +99,23 @@ export default function LinemoPage() {
                 おすすめ
               </div>
               <div className="text-center mb-6">
-                <h3 className="text-2xl font-bold text-pink-600 mb-2">ベストプラン</h3>
+                <h3 className="text-2xl font-bold text-pink-600 mb-2">ベストプラン（〜10GB）</h3>
                 <div className="text-4xl font-bold text-gray-900 mb-2">990<span className="text-lg">円/月</span></div>
-                <p className="text-gray-600">～10GB + 通話オプション割引</p>
+                <p className="text-gray-600">〜10GB / 通話オプション別</p>
               </div>
 
               <div className="space-y-4 mb-8">
                 <div className="flex justify-between">
                   <span>データ容量</span>
-                  <span className="font-semibold">～10GB</span>
+                  <span className="font-semibold">〜10GB</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>データ超過後</span>
+                  <span className="font-semibold">最大300kbps</span>
                 </div>
                 <div className="flex justify-between">
                   <span>通話オプション</span>
-                  <span className="font-semibold text-green-600">7ヶ月間割引</span>
+                  <span className="font-semibold text-gray-600">任意追加</span>
                 </div>
                 <div className="flex justify-between">
                   <span>LINEギガフリー</span>
@@ -124,10 +127,8 @@ export default function LinemoPage() {
                 </div>
               </div>
 
-              <div className="bg-gray-50 p-4 rounded-lg mb-6">
-                <h4 className="font-semibold mb-2">実質料金（12ヶ月）</h4>
-                <div className="text-2xl font-bold text-green-600">490円/月</div>
-                <p className="text-sm text-gray-600 mt-1">6ヶ月基本料無料キャンペーン適用時</p>
+              <div className="bg-gray-50 p-4 rounded-lg mb-6 text-sm text-gray-600 rounded-xl">
+                ※表示価格は税込。キャンペーン/割引は時期・条件で変動。最新情報は公式サイトを確認してください。
               </div>
 
               <a 
@@ -140,15 +141,15 @@ export default function LinemoPage() {
 
             <div className="bg-white border border-gray-200 rounded-xl p-8">
               <div className="text-center mb-6">
-                <h3 className="text-2xl font-bold text-pink-600 mb-2">ベストプランV</h3>
+                <h3 className="text-2xl font-bold text-pink-600 mb-2">ベストプランV（〜30GB）</h3>
                 <div className="text-4xl font-bold text-gray-900 mb-2">2,970<span className="text-lg">円/月</span></div>
-                <p className="text-gray-600">～30GB + 5分通話込み</p>
+                <p className="text-gray-600">〜30GB / 5分通話込み</p>
               </div>
 
               <div className="space-y-4 mb-8">
                 <div className="flex justify-between">
                   <span>データ容量</span>
-                  <span className="font-semibold">～30GB</span>
+                  <span className="font-semibold">〜30GB</span>
                 </div>
                 <div className="flex justify-between">
                   <span>データ超過後</span>
@@ -168,10 +169,8 @@ export default function LinemoPage() {
                 </div>
               </div>
 
-              <div className="bg-gray-50 p-4 rounded-lg mb-6">
-                <h4 className="font-semibold mb-2">実質料金（12ヶ月）</h4>
-                <div className="text-2xl font-bold text-green-600">1,628円/月</div>
-                <p className="text-sm text-gray-600 mt-1">6ヶ月基本料無料キャンペーン適用時</p>
+              <div className="bg-gray-50 p-4 rounded-lg mb-6 text-sm text-gray-600 rounded-xl">
+                ※表示価格は税込。キャンペーン/割引は時期・条件で変動。最新情報は公式サイトを確認してください。
               </div>
 
               <a 
@@ -183,14 +182,8 @@ export default function LinemoPage() {
             </div>
           </div>
 
-          <div className="mt-8 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
-            <h4 className="font-semibold text-yellow-800 mb-2">キャンペーン詳細</h4>
-            <ul className="text-sm space-y-1 text-yellow-700">
-              <li>• キャンペーンは時期により内容が変動します。最新情報は公式をご確認ください。</li>
-              <li>• 5分かけ放題オプション8ヶ月間無料（550円×8ヶ月 = 4,400円おトク）</li>
-              <li>• LINEスタンププレミアムポイントバックキャンペーン</li>
-              <li>• PayPayポイント還元（条件達成時）</li>
-            </ul>
+          <div className="mt-8 p-4 bg-yellow-50 border border-yellow-200 rounded-lg text-sm text-yellow-800">
+            ※キャンペーン/特典は予告なく変更・終了する場合があります。必ず公式サイトで最新条件をご確認ください。
           </div>
         </div>
       </section>
@@ -341,7 +334,7 @@ export default function LinemoPage() {
       {/* 競合比較 */}
       <section className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center text-gray-900 mb-10">競合3社との比較</h2>
+          <h2 className="text-3xl font-bold text-center text-gray-900 mb-10">主要オンライン/サブブランド比較</h2>
 
           <div className="overflow-x-auto">
             <table className="w-full bg-white rounded-xl shadow-lg overflow-hidden">
@@ -357,24 +350,24 @@ export default function LinemoPage() {
               <tbody>
                 <tr className="border-b border-gray-100">
                   <td className="px-6 py-4 font-semibold">月額料金</td>
-                  <td className="px-6 py-4 text-pink-600 font-bold">990円</td>
+                  <td className="px-6 py-4 text-pink-600 font-bold">990円 / 2,970円</td>
                   <td className="px-6 py-4">2,970円</td>
-                  <td className="px-6 py-4">0円</td>
-                  <td className="px-6 py-4">3,278円</td>
+                  <td className="px-6 py-4">0円（条件あり）</td>
+                  <td className="px-6 py-4">3,828円</td>
                 </tr>
                 <tr className="border-b border-gray-100">
                   <td className="px-6 py-4 font-semibold">データ容量</td>
-                  <td className="px-6 py-4 text-pink-600 font-bold">3GB</td>
-                  <td className="px-6 py-4">20GB</td>
+                  <td className="px-6 py-4 text-pink-600 font-bold">〜10GB / 〜30GB</td>
+                  <td className="px-6 py-4">30GB</td>
                   <td className="px-6 py-4">トッピング制</td>
-                  <td className="px-6 py-4">20GB</td>
+                  <td className="px-6 py-4">35GB</td>
                 </tr>
                 <tr className="border-b border-gray-100">
                   <td className="px-6 py-4 font-semibold">通話オプション</td>
-                  <td className="px-6 py-4 text-pink-600 font-bold">5分無料（8ヶ月）</td>
-                  <td className="px-6 py-4">5分無料込み</td>
+                  <td className="px-6 py-4 text-pink-600 font-bold">任意追加 / 5分込み</td>
+                  <td className="px-6 py-4">5分込み</td>
                   <td className="px-6 py-4">トッピング制</td>
-                  <td className="px-6 py-4">10分無料込み</td>
+                  <td className="px-6 py-4">10分込み</td>
                 </tr>
                 <tr className="border-b border-gray-100">
                   <td className="px-6 py-4 font-semibold">eSIM対応</td>
@@ -396,21 +389,21 @@ export default function LinemoPage() {
 
           <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="bg-white p-6 rounded-xl">
-              <h3 className="font-bold text-lg mb-3 text-green-600">LINEMOが勝る点</h3>
+              <h3 className="font-bold text-lg mb-3 text-green-600">LINEMOの強み</h3>
               <ul className="space-y-2 text-sm">
-                <li>• 3GBプランの料金が最安</li>
-                <li>• LINEギガフリーで実質容量増</li>
-                <li>• 6ヶ月無料キャンペーン</li>
-                <li>• ソフトバンク回線の安定性</li>
+                <li>• 〜10GB帯でシンプルな税込990円</li>
+                <li>• LINEギガフリーで日常利用に強い</li>
+                <li>• eSIM即日開通に対応</li>
+                <li>• ソフトバンク回線による安定性</li>
               </ul>
             </div>
             <div className="bg-white p-6 rounded-xl">
-              <h3 className="font-bold text-lg mb-3 text-orange-600">競合が勝る点</h3>
+              <h3 className="font-bold text-lg mb-3 text-orange-600">他社の強み</h3>
               <ul className="space-y-2 text-sm">
-                <li>• 大容量プランの選択肢</li>
-                <li>• 店舗サポート（UQ）</li>
-                <li>• 家族割引（UQ）</li>
-                <li>• 完全0円運用（povo）</li>
+                <li>• 大容量/家族割（UQ・Y!mobile等）</li>
+                <li>• 店舗サポート（UQ/Y!mobile）</li>
+                <li>• 家族割引による追加割引</li>
+                <li>• 基本料0円（条件あり / povo2.0）</li>
               </ul>
             </div>
             <div className="bg-white p-6 rounded-xl">
@@ -432,20 +425,20 @@ export default function LinemoPage() {
             LINEMOで格安SIMデビュー
           </h2>
           <p className="text-xl mb-8 opacity-90">
-            6ヶ月基本料無料 + 5分かけ放題8ヶ月無料で最大10,340円おトク
+            シンプルな2区分（〜10GB / 〜30GB）で用途に応じて選べます。※特典は変動するため公式で最新条件を確認してください。
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a 
               href="#" 
               className="bg-white text-pink-600 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-100 transition-colors whitespace-nowrap cursor-pointer"
             >
-              LINEMO公式サイトで申込
+              LINEMO公式サイトで確認
             </a>
             <Link 
               href="/compare"
               className="bg-pink-700 text-white border-2 border-pink-400 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-pink-800 transition-colors whitespace-nowrap"
             >
-              他プランと比較する
+              他社プランと比較する
             </Link>
           </div>
         </div>
