@@ -74,6 +74,18 @@ function copyRecursive(src, dest){
   const staticDest = path.join(distDir, '_next','static');
   copyRecursive(staticSrc, staticDest);
 
+  // publicフォルダの内容をコピー
+  const publicSrc = path.join(root, 'public');
+  if (fs.existsSync(publicSrc)) {
+    for(const entry of fs.readdirSync(publicSrc)){
+      const srcFile = path.join(publicSrc, entry);
+      const destFile = path.join(distDir, entry);
+      if (fs.statSync(srcFile).isFile() && entry !== 'index.html') {
+        fs.copyFileSync(srcFile, destFile);
+      }
+    }
+  }
+
   // 404 対応: index.html 存在保証
   if(!fs.existsSync(path.join(distDir,'index.html'))){
     console.error('index.html missing in dist');
