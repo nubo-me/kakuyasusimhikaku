@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
+import { ESIM_LAST_UPDATED, OFFICIAL_LINKS } from './constants';
 
 export default function EsimGuidePage() {
   const [activeDevice, setActiveDevice] = useState('iPhone');
@@ -52,6 +53,7 @@ export default function EsimGuidePage() {
             <br />
             <span className="text-purple-600">機種別詳細手順</span>
           </h1>
+          <p className="text-sm text-gray-500 mb-4">最終更新: {ESIM_LAST_UPDATED}</p>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
             物理SIMカード不要のeSIMを簡単設定。iPhone・Android・iPadの機種別に、
             つまずきやすいポイントも含めて分かりやすく解説します。
@@ -112,44 +114,42 @@ export default function EsimGuidePage() {
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
               <div>
-                <h3 className="text-xl font-bold mb-6">対応機種</h3>
+                <h3 className="text-xl font-bold mb-6">対応機種（2025年8月時点）</h3>
                 <div className="bg-blue-50 border border-blue-200 rounded-xl p-6">
-                  <div className="grid grid-cols-2 gap-4 text-sm">
+                  <div className="space-y-6">
                     <div>
-                      <h4 className="font-semibold mb-2 text-blue-900">iPhone 14シリーズ</h4>
-                      <ul className="space-y-1 text-blue-800">
-                        <li>• iPhone 14 Pro Max</li>
-                        <li>• iPhone 14 Pro</li>
-                        <li>• iPhone 14 Plus</li>
-                        <li>• iPhone 14</li>
-                      </ul>
+                      <h4 className="font-semibold mb-3 text-blue-900">iPhone（Apple）</h4>
+                      <div className="bg-white rounded-lg p-4 mb-3">
+                        <p className="text-sm text-blue-800 mb-2">
+                          <strong>原則：</strong><strong>iPhone XS / XS Max / XR 以降</strong>は eSIM 対応。
+                        </p>
+                        <p className="text-sm text-blue-800 mb-2">
+                          <strong>補足：</strong><strong>iPhone 13 以降</strong>は<strong>デュアル eSIM</strong>（2回線同時待受）にも対応。<strong>米国購入の iPhone 14 以降</strong>は<strong>eSIM 専用</strong>（物理SIM非対応）。
+                        </p>
+                      </div>
+                      
+                      <details className="bg-white rounded-lg">
+                        <summary className="cursor-pointer p-3 font-medium text-blue-900 hover:bg-blue-50 rounded-lg">
+                          代表モデルを見る
+                        </summary>
+                        <div className="p-3 pt-0">
+                          <ul className="text-sm text-blue-800 space-y-1 grid grid-cols-2 gap-2">
+                            <li>• iPhone 15 / 15 Plus / 15 Pro / 15 Pro Max</li>
+                            <li>• iPhone 14 各種</li>
+                            <li>• iPhone 13 各種</li>
+                            <li>• iPhone SE（第2/第3世代）</li>
+                            <li>• iPhone 12 各種</li>
+                            <li>• iPhone 11 / 11 Pro / 11 Pro Max</li>
+                            <li>• iPhone XS / XS Max</li>
+                            <li>• iPhone XR</li>
+                          </ul>
+                        </div>
+                      </details>
                     </div>
-                    <div>
-                      <h4 className="font-semibold mb-2 text-blue-900">iPhone 13シリーズ</h4>
-                      <ul className="space-y-1 text-blue-800">
-                        <li>• iPhone 13 Pro Max</li>
-                        <li>• iPhone 13 Pro</li>
-                        <li>• iPhone 13 mini</li>
-                        <li>• iPhone 13</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h4 className="font-semibold mb-2 text-blue-900">iPhone 12シリーズ</h4>
-                      <ul className="space-y-1 text-blue-800">
-                        <li>• iPhone 12 Pro Max</li>
-                        <li>• iPhone 12 Pro</li>
-                        <li>• iPhone 12 mini</li>
-                        <li>• iPhone 12</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h4 className="font-semibold mb-2 text-blue-900">その他対応機種</h4>
-                      <ul className="space-y-1 text-blue-800">
-                        <li>• iPhone SE（第3世代）</li>
-                        <li>• iPhone 11シリーズ</li>
-                        <li>• iPhone XSシリーズ</li>
-                        <li>• iPhone XR</li>
-                      </ul>
+                    
+                    <div className="text-xs text-blue-600 space-y-1">
+                      <p><strong>確認のコツ：</strong>端末の設定で「EID（eSIMの識別子）」が表示されれば対応の目安。</p>
+                      <p>各社の公式サポートページで、国/型番ごとの対応状況を必ず確認してください。</p>
                     </div>
                   </div>
                 </div>
@@ -312,24 +312,95 @@ export default function EsimGuidePage() {
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
               <div>
-                <h3 className="text-xl font-bold mb-6">対応機種（主要メーカー）</h3>
+                <h3 className="text-xl font-bold mb-6">対応機種（2025年8月時点）</h3>
                 <div className="bg-green-50 border border-green-200 rounded-xl p-6">
-                  <div className="space-y-4 text-sm">
+                  <div className="space-y-6">
                     <div>
-                      <h4 className="font-semibold mb-2 text-green-900">Google Pixel</h4>
-                      <p className="text-green-800">Pixel 3以降のほぼ全機種（Pixel 3a除く）</p>
+                      <h4 className="font-semibold mb-3 text-green-900">Google Pixel</h4>
+                      <div className="bg-white rounded-lg p-4 mb-3">
+                        <p className="text-sm text-green-800 mb-2">
+                          <strong>原則：</strong><strong>Pixel 4 以降</strong>は<strong>全モデル eSIM 対応</strong>。
+                        </p>
+                        <p className="text-sm text-green-800 mb-2">
+                          <strong>注意：</strong><strong>Pixel 3 / 3a の日本版</strong>は eSIM <strong>非対応</strong>。
+                        </p>
+                        <p className="text-sm text-green-800">
+                          <strong>補足：</strong><strong>Pixel 7 以降</strong>はキャリア条件を満たせば<strong>2つの eSIM 同時待受</strong>が可能。
+                        </p>
+                      </div>
+                      
+                      <details className="bg-white rounded-lg">
+                        <summary className="cursor-pointer p-3 font-medium text-green-900 hover:bg-green-50 rounded-lg">
+                          代表モデルを見る
+                        </summary>
+                        <div className="p-3 pt-0">
+                          <ul className="text-sm text-green-800 space-y-1 grid grid-cols-2 gap-2">
+                            <li>• Pixel 8 / 8 Pro / 8a</li>
+                            <li>• Pixel 7 / 7 Pro / 7a</li>
+                            <li>• Pixel 6 / 6 Pro / 6a</li>
+                            <li>• Pixel 5 / 5a</li>
+                            <li>• Pixel 4 / 4 XL / 4a / 4a (5G)</li>
+                            <li>• Pixel Fold</li>
+                          </ul>
+                        </div>
+                      </details>
                     </div>
+
                     <div>
-                      <h4 className="font-semibold mb-2 text-green-900">Samsung Galaxy</h4>
-                      <p className="text-green-800">Galaxy S20以降、Galaxy Note20以降、Galaxy Z シリーズ</p>
+                      <h4 className="font-semibold mb-3 text-green-900">Samsung Galaxy（日本向け）</h4>
+                      <div className="bg-white rounded-lg p-4 mb-3">
+                        <p className="text-sm text-green-800 mb-2">
+                          <strong>原則：</strong>国内版での eSIM 対応モデルは下記が目安。
+                        </p>
+                        <p className="text-sm text-green-800">
+                          <strong>注意：</strong>国・キャリア/型番により eSIM 対応可否が異なる場合があります（要型番確認）。
+                        </p>
+                      </div>
+                      
+                      <details className="bg-white rounded-lg">
+                        <summary className="cursor-pointer p-3 font-medium text-green-900 hover:bg-green-50 rounded-lg">
+                          代表モデルを見る
+                        </summary>
+                        <div className="p-3 pt-0">
+                          <ul className="text-sm text-green-800 space-y-1 grid grid-cols-2 gap-2">
+                            <li>• S24 / S24 Ultra / S24 FE</li>
+                            <li>• S23 / S23 Ultra / S23 FE</li>
+                            <li>• Z Fold6 / Fold5 / Fold4</li>
+                            <li>• Z Flip6 / Flip5 / Flip4</li>
+                            <li>• A55 5G / A54 5G / A23 5G</li>
+                            <li>• Tab S9 FE+ 5G</li>
+                          </ul>
+                        </div>
+                      </details>
                     </div>
+
                     <div>
-                      <h4 className="font-semibold mb-2 text-green-900">Sony Xperia</h4>
-                      <p className="text-green-800">Xperia 1 II以降の一部機種</p>
+                      <h4 className="font-semibold mb-3 text-green-900">Sony Xperia（代表例）</h4>
+                      <div className="bg-white rounded-lg p-4 mb-3">
+                        <p className="text-sm text-green-800">
+                          <strong>注意：</strong>同一シリーズでもキャリア/型番により挙動が異なる場合があります。
+                        </p>
+                      </div>
+                      
+                      <details className="bg-white rounded-lg">
+                        <summary className="cursor-pointer p-3 font-medium text-green-900 hover:bg-green-50 rounded-lg">
+                          代表モデルを見る
+                        </summary>
+                        <div className="p-3 pt-0">
+                          <ul className="text-sm text-green-800 space-y-1 grid grid-cols-2 gap-2">
+                            <li>• Xperia 1 VI / V / IV</li>
+                            <li>• Xperia 5 VI / V / IV</li>
+                            <li>• Xperia 10 VI / V / IV</li>
+                            <li>• Xperia 10 III Lite</li>
+                            <li>• Xperia Ace III</li>
+                          </ul>
+                        </div>
+                      </details>
                     </div>
-                    <div>
-                      <h4 className="font-semibold mb-2 text-green-900">その他</h4>
-                      <p className="text-green-800">OPPO Find X3 Pro、Rakuten Hand 5Gなど</p>
+                    
+                    <div className="text-xs text-green-600 space-y-1">
+                      <p><strong>確認のコツ：</strong>端末の設定で「EID（eSIMの識別子）」が表示されれば対応の目安。</p>
+                      <p>各社の公式サポートページで、国/型番ごとの対応状況を必ず確認してください。</p>
                     </div>
                   </div>
                 </div>
@@ -589,6 +660,92 @@ export default function EsimGuidePage() {
               >
                 乗り換え手順ガイド
               </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Official Links Section */}
+      <section className="py-16 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl font-bold text-center text-gray-900 mb-10">
+            参考リンク（公式）
+          </h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="bg-white rounded-xl p-6 shadow-lg">
+              <h3 className="font-bold text-xl mb-4 text-blue-600">
+                <i className="ri-apple-line mr-2"></i>
+                Apple
+              </h3>
+              <div className="space-y-3">
+                <a 
+                  href={OFFICIAL_LINKS.apple.esimOverview}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block text-sm text-blue-700 hover:text-blue-900 hover:underline"
+                >
+                  iPhone の eSIM 概要
+                </a>
+                <a 
+                  href={OFFICIAL_LINKS.apple.dualEsim}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block text-sm text-blue-700 hover:text-blue-900 hover:underline"
+                >
+                  デュアル eSIM / 条件
+                </a>
+                <a 
+                  href={OFFICIAL_LINKS.apple.supportedCarriers}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block text-sm text-blue-700 hover:text-blue-900 hover:underline"
+                >
+                  eSIM 対応キャリア（国別）
+                </a>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-xl p-6 shadow-lg">
+              <h3 className="font-bold text-xl mb-4 text-green-600">
+                <i className="ri-google-line mr-2"></i>
+                Google
+              </h3>
+              <div className="space-y-3">
+                <a 
+                  href={OFFICIAL_LINKS.google.pixelEsim}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block text-sm text-green-700 hover:text-green-900 hover:underline"
+                >
+                  Pixel eSIM 対応機種の注意・セットアップ
+                </a>
+                <a 
+                  href={OFFICIAL_LINKS.google.dualSim}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block text-sm text-green-700 hover:text-green-900 hover:underline"
+                >
+                  デュアルSIM（DSDS）/ 2eSIM 条件
+                </a>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-xl p-6 shadow-lg">
+              <h3 className="font-bold text-xl mb-4 text-purple-600">
+                <i className="ri-smartphone-line mr-2"></i>
+                Samsung
+              </h3>
+              <div className="space-y-3">
+                <a 
+                  href={OFFICIAL_LINKS.samsung.galaxyEsim}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block text-sm text-purple-700 hover:text-purple-900 hover:underline"
+                >
+                  Galaxy eSIM 対応機種一覧（日本）
+                </a>
+              </div>
             </div>
           </div>
         </div>
