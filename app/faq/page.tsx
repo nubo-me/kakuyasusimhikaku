@@ -1,10 +1,14 @@
 'use client';
 
 import Link from 'next/link';
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 
 export default function FaqPage() {
-  const [openItems, setOpenItems] = useState<number[]>([]);
+  const [openItems, setOpenItems] = useState<number[]>([0]); // 初期で最初の質問を開く
+
+  // Tailwind パージ対策: 動的 color クラスを safelist するためのダミー要素
+  // blue green purple orange red 系の組合せをここで宣言
+  const _tailwindSafelist = 'hidden bg-blue-100 bg-green-100 bg-purple-100 bg-orange-100 bg-red-100 text-blue-700 text-green-700 text-purple-700 text-orange-700 text-red-700 from-blue-500 from-green-500 from-purple-500 from-orange-500 from-red-500 to-blue-600 to-green-600 to-purple-600 to-orange-600 to-red-600';
 
   const toggleItem = (index: number) => {
     setOpenItems(prev => 

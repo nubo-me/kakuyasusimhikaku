@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 
 interface Plan {
   carrier: string;
@@ -31,21 +31,16 @@ const AdDisclosure = () => (
 
 export default function CompareContent() {
   const [filteredCategory, setFilteredCategory] = useState<string>('all');
-  const [isClient, setIsClient] = useState(false);
 
+  // 初回マウント時 URL パラメータ適用
   useEffect(() => {
-    setIsClient(true);
-    
-    // URLパラメータを解析してカテゴリを設定
     try {
       const searchParams = new URLSearchParams(window.location.search);
       const category = searchParams.get('category');
       if (category && ['all', 'budget', 'medium', 'unlimited'].includes(category)) {
         setFilteredCategory(category);
       }
-    } catch (error) {
-      console.log('URLパラメータの解析に失敗しました:', error);
-    }
+    } catch {}
   }, []);
 
   const plans: Plan[] = [
@@ -170,29 +165,18 @@ export default function CompareContent() {
     { id: 'unlimited', name: '大容量プラン' }
   ];
 
-  const getFilteredPlans = () => {
-    switch (filteredCategory) {
-      case 'budget':
-        return plans.filter(plan => 
-          parseInt(plan.price.replace(/[^\d]/g, '')) < 1500 || 
-          plan.name === 'ベストプラン（〜10GB）' || plan.name === 'ミニミニプラン' || plan.name === 'シンプル2 S'
-        );
-      case 'medium':
-        return plans.filter(plan => {
-          const price = parseInt(plan.price.replace(/[^\d]/g, ''));
-          return (price >= 1500 && price <= 3500) || 
-                 plan.dataAllowance.includes('15GB') || 
-                 plan.dataAllowance.includes('20GB');
-        });
-      case 'unlimited':
-        return plans.filter(plan => 
-          plan.dataAllowance.includes('30GB') || 
-          plan.dataAllowance === 'トッピング制'
-        );
-      default:
-        return plans;
+  const filteredPlans = useMemo(() => {
+    if (filteredCategory === 'budget') {
+      return plans.filter(p => /3GB|4GB|〜10GB|トッピング制/.test(p.dataAllowance) || parseInt(p.price.replace(/[^\d]/g,'')) <= 1200);
     }
-  };
+    if (filteredCategory === 'medium') {
+      return plans.filter(p => /15GB|20GB/.test(p.dataAllowance) || (parseInt(p.price.replace(/[^\d]/g,'')) > 1200 && parseInt(p.price.replace(/[^\d]/g,'')) <= 3500));
+    }
+    if (filteredCategory === 'unlimited') {
+      return plans.filter(p => /30GB|100GB/.test(p.dataAllowance) || p.dataAllowance === 'トッピング制');
+    }
+    return plans;
+  }, [filteredCategory, plans]);
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -240,7 +224,7 @@ export default function CompareContent() {
                 </tr>
               </thead>
               <tbody>
-                {getFilteredPlans().map((plan, index) => (
+                {filteredPlans.map((plan, index) => (
                   <tr key={`${plan.carrier}-${plan.name}-${index}`} className="hover:bg-gray-50">
                     <td className="border border-gray-300 px-4 py-3 font-medium">{plan.carrier}</td>
                     <td className="border border-gray-300 px-4 py-3">{plan.name}</td>
@@ -262,7 +246,7 @@ export default function CompareContent() {
           </div>
         </div>
 
-        <div className="bg-white rounded-lg shadow-lg p-6">
+  <div className="bg-white rounded-lg shadow-lg p-6">
           <h2 className="text-2xl font-bold text-gray-900 mb-4">プラン選びのポイント</h2>
           <div className="grid md:grid-cols-2 gap-6">
             <div>
@@ -282,7 +266,10 @@ export default function CompareContent() {
               </ul>
             </div>
           </div>
-      <p className="text-xs text-gray-500 mt-6">※表示価格は税込。キャンペーン/割引・トッピング条件は時期により変動します。最新情報は各社公式サイトを確認してください。</p>
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mt-6">
+            <p className="text-xs text-gray-500">表示件数: <span className="font-semibold">{filteredPlans.length}</span> / {plans.length}</p>
+            <p className="text-xs text-gray-500">※価格は税込。キャンペーン/割引・トッピング条件は変動。最新は公式をご確認ください。</p>
+          </div>
         </div>
       </div>
     </div>
