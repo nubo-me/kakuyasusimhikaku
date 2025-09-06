@@ -21,6 +21,38 @@ export default function HomePage() {
           })
         }}
       />
+      {/* FAQ Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'FAQPage',
+            mainEntity: [
+              {
+                '@type': 'Question',
+                name: '格安SIMに乗り換えるとどのくらい安くなりますか？',
+                acceptedAnswer: { '@type': 'Answer', text: '大手キャリアから格安SIMに乗り換えると、月額料金を2,000〜4,000円削減できます。年間で24,000〜48,000円の節約が可能です。データ使用量3GB以下なら月990円から利用でき、30GBでも2,970円程度で利用できます。' }
+              },
+              {
+                '@type': 'Question',
+                name: '乗り換え時に電話番号は変わりますか？',
+                acceptedAnswer: { '@type': 'Answer', text: 'MNP（携帯電話番号ポータビリティ）を利用すれば、現在の電話番号をそのまま使用できます。手続きは約30分程度で完了し、番号が使えない期間はほとんどありません。' }
+              },
+              {
+                '@type': 'Question',
+                name: '格安SIMでも通信速度は問題ありませんか？',
+                acceptedAnswer: { '@type': 'Answer', text: 'ahamo、povo、LINEMOなどのオンライン専用プランは大手キャリアの回線を直接使用しているため、通信品質は大手キャリアと同等です。ただし、昼休みや夜間など混雑時間帯は速度低下する可能性があります。' }
+              },
+              {
+                '@type': 'Question',
+                name: 'eSIMと通常のSIMカードの違いは何ですか？',
+                acceptedAnswer: { '@type': 'Answer', text: 'eSIMは端末内蔵型の電子SIMで物理カード不要。オンラインで即時開通でき、複数回線の切り替えや海外現地プランへの変更が容易です。紛失や破損リスクもありません。' }
+              }
+            ]
+          })
+        }}
+      />
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-gradient-to-r from-slate-900 via-blue-900 to-purple-900">
         <div className="absolute inset-0 bg-[url('https://readdy.ai/api/search-image?query=Abstract%20geometric%20patterns%20with%20flowing%20lines%2C%20modern%20technology%20background%2C%20dark%20blue%20and%20purple%20gradients%2C%20minimalist%20design%2C%20professional%20corporate%20style%2C%20subtle%20lighting%20effects%2C%20clean%20composition&width=1920&height=800&seq=hero-bg&orientation=landscape')] bg-cover bg-center opacity-20"></div>

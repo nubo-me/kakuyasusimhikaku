@@ -2,6 +2,9 @@ import type { Metadata } from 'next';
 import { Inter, Noto_Sans_JP } from 'next/font/google';
 import './globals.css';
 
+// サイト基本URL（環境変数で上書き可）
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://kakuyasusimhikaku-6c501.web.app';
+
 const inter = Inter({ 
   subsets: ['latin'],
   display: 'swap',
@@ -16,9 +19,28 @@ const notoSansJP = Noto_Sans_JP({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: '格安SIM完全比較ガイド2025 | 月額990円〜最適プラン診断',
   description: '2025年最新｜主要ブランドの料金・速度・キャンペーンを中立比較。節約目安：月2,000〜4,000円（年24,000〜48,000円）。',
-  keywords: '格安SIM,比較,料金,速度,キャンペーン,MNP,eSIM',
+  keywords: ['格安SIM','比較','料金','速度','キャンペーン','MNP','eSIM'],
+  alternates: { canonical: '/' },
+  openGraph: {
+    title: '格安SIM完全比較ガイド2025 | 月額990円〜最適プラン診断',
+    description: '主要ブランドの料金・速度・キャンペーンを中立比較。家計を最適化するための最新格安SIM総合ナビ。',
+    url: SITE_URL,
+    siteName: '格安SIM完全比較ガイド',
+    locale: 'ja_JP',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: '格安SIM完全比較ガイド2025 | 月額990円〜最適プラン診断',
+    description: '主要ブランドの料金・速度・キャンペーンを中立比較。年最大48,000円の節約を目指すための情報ポータル。',
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({
@@ -29,8 +51,19 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <head>
-        <meta name="google-site-verification" content="OZsbyrb_bv_IxzslODehf7AZLpWlQVfg8SV5EdiaP3U" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" crossOrigin="anonymous" referrerPolicy="no-referrer" />
+  <meta name="google-site-verification" content="OZsbyrb_bv_IxzslODehf7AZLpWlQVfg8SV5EdiaP3U" />
+  <meta name="robots" content="index,follow" />
+  <meta property="og:title" content="格安SIM完全比較ガイド2025 | 月額990円〜最適プラン診断" />
+  <meta property="og:description" content="主要ブランドの料金・速度・キャンペーンを中立比較。家計最適化に役立つ格安SIM総合ガイド。" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content={SITE_URL} />
+  <meta property="og:site_name" content="格安SIM完全比較ガイド" />
+  <meta property="og:locale" content="ja_JP" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="格安SIM完全比較ガイド2025 | 月額990円〜最適プラン診断" />
+  <meta name="twitter:description" content="主要ブランドの料金・速度・キャンペーンを中立比較。年最大48,000円節約のヒント。" />
+  <link rel="canonical" href={SITE_URL + '/'} />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" crossOrigin="anonymous" referrerPolicy="no-referrer" />
       </head>
   <body className={`${inter.className} ${notoSansJP.variable} font-sans antialiased`}>
         {/* Structured Data (Website + Organization) */}
@@ -43,20 +76,20 @@ export default function RootLayout({
                 {
                   '@type': 'WebSite',
                   name: '格安SIM完全比較ガイド',
-                  url: 'https://example.com/',
+                  url: SITE_URL + '/',
                   inLanguage: 'ja-JP',
                   description: '主要ブランドの料金・速度・キャンペーンを中立比較する格安SIM比較サイト',
                   potentialAction: {
                     '@type': 'SearchAction',
-                    target: 'https://example.com/search?q={search_term_string}',
+                    target: SITE_URL + '/search?q={search_term_string}',
                     'query-input': 'required name=search_term_string'
                   }
                 },
                 {
                   '@type': 'Organization',
                   name: '格安SIM完全比較ガイド運営',
-                  url: 'https://example.com/',
-                  logo: 'https://example.com/logo.png'
+                  url: SITE_URL + '/',
+                  logo: SITE_URL + '/logo.png'
                 }
               ]
             })
