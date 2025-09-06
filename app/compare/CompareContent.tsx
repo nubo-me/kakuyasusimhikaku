@@ -1,6 +1,8 @@
 'use client';
 
 import React, { useState, useEffect, useMemo } from 'react';
+import Link from 'next/link';
+import { getExternalLink } from '../lib/brandLinks';
 
 interface Plan {
   carrier: string;
@@ -215,7 +217,7 @@ export default function CompareContent() {
             <table className="w-full border-collapse">
               <thead>
                 <tr className="bg-gray-50">
-                  <th className="border border-gray-300 px-4 py-3 text-left font-semibold">キャリア</th>
+                  <th className="border border-gray-300 px-4 py-3 text-left font-semibold">キャリア / 公式</th>
                   <th className="border border-gray-300 px-4 py-3 text-left font-semibold">プラン名</th>
                   <th className="border border-gray-300 px-4 py-3 text-left font-semibold">データ容量</th>
                   <th className="border border-gray-300 px-4 py-3 text-left font-semibold">月額料金</th>
@@ -233,7 +235,36 @@ export default function CompareContent() {
                       className={`transition-opacity duration-300 ${matched ? 'hover:bg-gray-50' : 'opacity-30'} ${matched ? '' : 'pointer-events-none'}`}
                       aria-hidden={!matched}
                     >
-                      <td className="border border-gray-300 px-4 py-3 font-medium">{plan.carrier}</td>
+                      <td className="border border-gray-300 px-4 py-3 font-medium">
+                        <div className="flex flex-col space-y-1">
+                          <span>{plan.carrier}</span>
+                          {(() => {
+                            const { url, isAffiliate, pixel } = getExternalLink(plan.carrier);
+                            return (
+                              <>
+                                <a
+                                  href={url}
+                                  target="_blank"
+                                  rel="nofollow noopener noreferrer"
+                                  className={`text-xs inline-flex items-center w-fit px-2 py-1 rounded border transition-colors ${isAffiliate ? 'text-white bg-green-600 hover:bg-green-700 border-green-600' : 'text-blue-600 bg-blue-50 hover:bg-blue-100 border-blue-200'}`}
+                                >
+                                  {isAffiliate ? '公式(広告)' : '公式サイト'}
+                                  <i className="ri-external-link-line ml-1 text-[10px]"></i>
+                                </a>
+                                {isAffiliate && pixel && (
+                                  <img
+                                    src={pixel.src}
+                                    width={pixel.width}
+                                    height={pixel.height}
+                                    alt={pixel.alt || ''}
+                                    style={{ border: 0 }}
+                                  />
+                                )}
+                              </>
+                            );
+                          })()}
+                        </div>
+                      </td>
                       <td className="border border-gray-300 px-4 py-3">{plan.name}</td>
                       <td className="border border-gray-300 px-4 py-3">{plan.dataAllowance}</td>
                       <td className="border border-gray-300 px-4 py-3 font-semibold text-blue-600">{plan.price}</td>

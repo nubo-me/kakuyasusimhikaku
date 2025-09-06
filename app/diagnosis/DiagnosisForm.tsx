@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { getExternalLink } from '../lib/brandLinks';
 
 interface DiagnosisResult {
   recommended: {
@@ -373,12 +374,37 @@ export default function DiagnosisForm() {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link 
-                href={`/brands/${result.recommended.brand.toLowerCase().replace(/[^a-z0-9]/g, '')}`}
-                className={`bg-gradient-to-r ${result.recommended.brandColor.includes('pink') ? 'from-pink-600 to-red-600' : 'from-blue-600 to-purple-600'} text-white px-8 py-4 rounded-xl font-semibold text-lg hover:shadow-lg transition-all duration-300 transform hover:scale-105 text-center whitespace-nowrap`}
-              >
-                詳細を確認して申し込む
-              </Link>
+              {(() => {
+                const { url, isAffiliate, pixel } = getExternalLink(result.recommended.brand);
+                const isExternal = isAffiliate || /^https?:/.test(url);
+                const buttonClass = `bg-gradient-to-r ${result.recommended.brandColor.includes('pink') ? 'from-pink-600 to-red-600' : 'from-blue-600 to-purple-600'} text-white px-8 py-4 rounded-xl font-semibold text-lg hover:shadow-lg transition-all duration-300 transform hover:scale-105 text-center whitespace-nowrap`;
+                if(isExternal){
+                  return (
+                    <>
+                      <a
+                        href={url}
+                        target="_blank"
+                        rel="nofollow noopener noreferrer"
+                        className={buttonClass}
+                      >
+                        {isAffiliate ? '公式(広告)で申し込む' : '公式サイトへ'}
+                      </a>
+                      {isAffiliate && pixel && (
+                        <img
+                          src={pixel.src}
+                          width={pixel.width}
+                          height={pixel.height}
+                          alt={pixel.alt || ''}
+                          style={{ border: 0 }}
+                        />
+                      )}
+                    </>
+                  );
+                }
+                return (
+                  <Link href={url} className={buttonClass}>詳細を確認して申し込む</Link>
+                );
+              })()}
               <Link 
                 href="/compare"
                 className="bg-white text-gray-700 border-2 border-gray-300 px-8 py-4 rounded-xl font-semibold text-lg hover:bg-gray-50 transition-colors text-center whitespace-nowrap"
@@ -421,12 +447,37 @@ export default function DiagnosisForm() {
 
                     <p className="text-sm text-gray-600 mb-4">{alt.reason}</p>
 
-                    <Link 
-                      href={`/brands/${alt.brand.toLowerCase().replace(/[^a-z0-9]/g, '')}`}
-                      className="block text-center bg-gray-100 hover:bg-gray-200 text-gray-800 py-3 rounded-lg font-semibold transition-colors"
-                    >
-                      詳細を見る
-                    </Link>
+                    {(() => {
+                      const { url, isAffiliate, pixel } = getExternalLink(alt.brand);
+                      const isExternal = isAffiliate || /^https?:/.test(url);
+                      if(isExternal){
+                        return <>
+                          <a
+                            href={url}
+                            target="_blank"
+                            rel="nofollow noopener noreferrer"
+                            className="block text-center bg-gray-100 hover:bg-gray-200 text-gray-800 py-3 rounded-lg font-semibold transition-colors"
+                          >
+                            {isAffiliate ? '公式(広告)へ' : '公式サイト'}
+                          </a>
+                          {isAffiliate && pixel && (
+                            <img
+                              src={pixel.src}
+                              width={pixel.width}
+                              height={pixel.height}
+                              alt={pixel.alt || ''}
+                              style={{ border: 0 }}
+                            />
+                          )}
+                        </>;
+                      }
+                      return (
+                        <Link
+                          href={url}
+                          className="block text-center bg-gray-100 hover:bg-gray-200 text-gray-800 py-3 rounded-lg font-semibold transition-colors"
+                        >詳細を見る</Link>
+                      );
+                    })()}
                   </div>
                 ))}
               </div>
