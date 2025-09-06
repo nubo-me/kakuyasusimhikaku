@@ -1,6 +1,3 @@
-'use client';
-
-import AdDisclosure from './components/AdDisclosure';
 import Link from 'next/link';
 
 export default function HomePage() {
@@ -64,7 +61,15 @@ export default function HomePage() {
                 <span className="text-sm font-medium">2025年最新 中立比較ガイド</span>
               </div>
               <div className="mb-6">
-                <AdDisclosure variant="dark" compact />
+                {/* AdDisclosure (インライン化でクライアントJS削減) */}
+                <span 
+                  className="inline-flex items-center rounded-full text-xs font-medium tracking-wide px-3 py-1 bg-black/40 text-white border border-white/20 backdrop-blur-sm" 
+                  aria-label="広告・PRを含む表示" role="note"
+                >
+                  <i className="ri-advertisement-line text-base mr-1" aria-hidden="true"></i>
+                  広告・PRを含みます
+                  <span className="sr-only"> 本サイトの一部リンク経由で成果が発生した場合、運営に報酬が入ることがあります。掲載内容は中立性維持に努めています。</span>
+                </span>
               </div>
 
               <h1 className="text-5xl lg:text-6xl font-bold mb-6 leading-tight">
@@ -114,7 +119,10 @@ export default function HomePage() {
                 <img
                   src="https://readdy.ai/api/search-image?query=Modern%20smartphone%20displaying%20mobile%20app%20interface%2C%20clean%20minimalist%20design%2C%20floating%20in%20space%20with%20glowing%20effects%2C%20professional%20product%20photography%2C%20blue%20and%20purple%20lighting%2C%20futuristic%20technology%20concept&width=600&height=400&seq=hero-phone&orientation=landscape"
                   alt="格安SIM比較"
-                  className="relative rounded-3xl shadow-2xl"
+                  width="600" height="400"
+                  fetchPriority="high"
+                  decoding="async"
+                  className="relative rounded-3xl shadow-2xl w-full h-auto"
                 />
               </div>
             </div>
@@ -342,7 +350,9 @@ export default function HomePage() {
                   <img
                     src="https://readdy.ai/api/search-image?query=Modern%20smartphone%20with%20eSIM%20activation%20screen%2C%20glowing%20digital%20interface%2C%20futuristic%20holographic%20effects%2C%20purple%20and%20blue%20neon%20lighting%2C%20high-tech%20visualization%2C%20clean%20product%20photography%2C%20professional%20tech%20showcase&width=500&height=600&seq=esim-phone&orientation=portrait"
                     alt="eSIM対応スマートフォン"
-                    className="relative rounded-2xl shadow-2xl transform hover:scale-105 transition-transform duration-500"
+                    width="500" height="600"
+                    loading="lazy" decoding="async"
+                    className="relative rounded-2xl shadow-2xl transform hover:scale-105 transition-transform duration-500 w-full h-auto"
                   />
                 </div>
               </div>
