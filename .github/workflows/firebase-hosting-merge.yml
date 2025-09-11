@@ -9,8 +9,6 @@ on:
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
-    env:
-      FIREBASE_SERVICE_ACCOUNT_JSON: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_KAKUYASUSIMHIKAKU_6C501 }}
     steps:
       - uses: actions/checkout@v4
       - name: Setup Node.js
@@ -23,14 +21,18 @@ jobs:
       - name: Build application
         run: npm run build
       - name: Deploy to Firebase Hosting (live)
+        env:
+          FIREBASE_SERVICE_ACCOUNT_JSON: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_KAKUYASUSIMHIKAKU_6C501 }}
         if: ${{ env.FIREBASE_SERVICE_ACCOUNT_JSON != '' }}
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
-          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          repoToken: ${{ github.token }}
           firebaseServiceAccount: ${{ env.FIREBASE_SERVICE_ACCOUNT_JSON }}
           channelId: live
           projectId: kakuyasusimhikaku-6c501
           firebaseToolsVersion: '13.20.2'
       - name: Skip deploy (missing FIREBASE_SERVICE_ACCOUNT secret)
+        env:
+          FIREBASE_SERVICE_ACCOUNT_JSON: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_KAKUYASUSIMHIKAKU_6C501 }}
         if: ${{ env.FIREBASE_SERVICE_ACCOUNT_JSON == '' }}
         run: echo "FIREBASE_SERVICE_ACCOUNT_KAKUYASUSIMHIKAKU_6C501 is not set; skipping deploy."
