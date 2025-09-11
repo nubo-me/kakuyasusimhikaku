@@ -52,6 +52,7 @@ export default function RootLayout({
     <html lang="ja">
       <head>
   <meta name="google-site-verification" content="OZsbyrb_bv_IxzslODehf7AZLpWlQVfg8SV5EdiaP3U" />
+  <meta name="google-adsense-account" content="ca-pub-4321998223277477" />
   <meta name="robots" content="index,follow" />
   <meta property="og:title" content="格安SIM完全比較ガイド2025 | 月額990円〜最適プラン診断" />
   <meta property="og:description" content="主要ブランドの料金・速度・キャンペーンを中立比較。家計最適化に役立つ格安SIM総合ガイド。" />

@@ -33,6 +33,16 @@ function copyRecursive(src, dest){
 }
 
 (function main(){
+  // Pre-clean .next to avoid Windows/OneDrive readlink EINVAL issues during Next cleanup
+  const nextDir = path.join(root, '.next');
+  if (fs.existsSync(nextDir)) {
+    try {
+      fs.rmSync(nextDir, { recursive: true, force: true });
+    } catch (e) {
+      console.warn('warn: failed to remove .next before build:', e?.message || e);
+    }
+  }
+
   run('next build');
 
   if(fs.existsSync(distDir)){

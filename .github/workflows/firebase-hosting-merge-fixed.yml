@@ -1,0 +1,48 @@
+name: Deploy to Firebase Hosting
+
+on:
+  workflow_dispatch:
+    inputs:
+      channel:
+        description: 'Deploy channel (live or preview name)'
+        required: false
+        default: 'live'
+  push:
+    branches:
+      - main
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build (Next.js static export)
+        run: npm run build
+
+      - name: Deploy to Firebase Hosting (live or preview)
+        if: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          projectId: kakuyasusimhikaku-6c501
+          channelId: ${{ github.event.inputs.channel || 'live' }}
+
+      - name: Skip reason (missing FIREBASE_SERVICE_ACCOUNT)
+        if: ${{ !secrets.FIREBASE_SERVICE_ACCOUNT }}
+        run: echo "FIREBASE_SERVICE_ACCOUNT secret is not set; deploy step skipped."
+
