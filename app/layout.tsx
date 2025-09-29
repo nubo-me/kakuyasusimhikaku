@@ -72,6 +72,11 @@ export default function RootLayout({
   <link rel="preconnect" href="https://www.googletagmanager.com" crossOrigin="anonymous" />
   <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" crossOrigin="anonymous" referrerPolicy="no-referrer" />
+  <script
+    async
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4321998223277477"
+    crossOrigin="anonymous"
+  ></script>
       </head>
   <body className={`${inter.className} ${notoSansJP.variable} font-sans antialiased`}>
         {/* Structured Data (Website + Organization) */}
