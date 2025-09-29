@@ -52,7 +52,11 @@ export default function HomePage() {
       />
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-gradient-to-r from-slate-900 via-blue-900 to-purple-900">
-        <div className="absolute inset-0 bg-[url('https://readdy.ai/api/search-image?query=Abstract%20geometric%20patterns%20with%20flowing%20lines%2C%20modern%20technology%20background%2C%20dark%20blue%20and%20purple%20gradients%2C%20minimalist%20design%2C%20professional%20corporate%20style%2C%20subtle%20lighting%20effects%2C%20clean%20composition&width=1920&height=800&seq=hero-bg&orientation=landscape')] bg-cover bg-center opacity-20"></div>
+        <div className="pointer-events-none absolute inset-0">
+          <div className="absolute -top-40 -right-32 h-80 w-80 rounded-full bg-gradient-to-br from-purple-400/40 to-blue-500/30 blur-3xl" aria-hidden="true"></div>
+          <div className="absolute -bottom-24 -left-16 h-72 w-72 rounded-full bg-blue-500/25 blur-[120px]" aria-hidden="true"></div>
+          <div className="absolute inset-0 opacity-20 [background-image:radial-gradient(circle_at_top,_rgba(255,255,255,0.35)_0%,_transparent_55%),radial-gradient(circle_at_bottom,_rgba(96,165,250,0.25)_0%,_transparent_60%)]" aria-hidden="true"></div>
+        </div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="text-white">
@@ -115,15 +119,47 @@ export default function HomePage() {
 
             <div className="hidden lg:block">
               <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-500/30 to-purple-600/30 rounded-3xl blur-xl"></div>
-                <img
-                  src="https://readdy.ai/api/search-image?query=Modern%20smartphone%20displaying%20mobile%20app%20interface%2C%20clean%20minimalist%20design%2C%20floating%20in%20space%20with%20glowing%20effects%2C%20professional%20product%20photography%2C%20blue%20and%20purple%20lighting%2C%20futuristic%20technology%20concept&width=600&height=400&seq=hero-phone&orientation=landscape"
-                  alt="格安SIM比較"
-                  width="600" height="400"
-                  fetchPriority="high"
-                  decoding="async"
-                  className="relative rounded-3xl shadow-2xl w-full h-auto"
-                />
+                <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-blue-400/30 to-purple-500/30 blur-3xl" aria-hidden="true"></div>
+                <div className="relative h-full w-full rounded-3xl border border-white/15 bg-white/5 backdrop-blur-xl p-8 shadow-2xl flex flex-col gap-6">
+                  <div className="flex items-center justify-between">
+                    <div className="flex flex-col">
+                      <span className="text-xs uppercase tracking-[0.3em] text-blue-100">Dashboard</span>
+                      <span className="text-2xl font-semibold">格安SIM診断</span>
+                    </div>
+                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-white/10 border border-white/20">リアルタイム</span>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4 text-left">
+                    <div className="rounded-2xl bg-white/10 border border-white/20 p-4">
+                      <p className="text-xs uppercase tracking-wide text-blue-200 mb-2">節約額</p>
+                      <p className="text-3xl font-bold text-white">¥4,200</p>
+                      <p className="text-xs text-blue-100 mt-1">平均月額の削減見込み</p>
+                    </div>
+                    <div className="rounded-2xl bg-white/10 border border-white/20 p-4">
+                      <p className="text-xs uppercase tracking-wide text-blue-200 mb-2">適合率</p>
+                      <p className="text-3xl font-bold text-white">92%</p>
+                      <p className="text-xs text-blue-100 mt-1">利用スタイルとのマッチ度</p>
+                    </div>
+                    <div className="rounded-2xl bg-white/10 border border-white/20 p-4 col-span-2">
+                      <p className="text-xs uppercase tracking-wide text-blue-200 mb-2">推奨プラン</p>
+                      <div className="flex items-center justify-between">
+                        <div className="flex flex-col">
+                          <span className="text-lg font-semibold text-white">LINEMO ミニプラン</span>
+                          <span className="text-sm text-blue-100">月990円 / 3GB</span>
+                        </div>
+                        <span className="inline-flex items-center px-3 py-1 rounded-full bg-emerald-400/20 text-emerald-100 text-xs border border-emerald-300/40">おすすめ</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-between text-sm text-blue-100">
+                    <span>データ更新：1分前</span>
+                    <span className="inline-flex items-center gap-2">
+                      <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                      リアルタイム解析
+                    </span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -134,7 +170,7 @@ export default function HomePage() {
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-gradient-to-r from-green-500 via-emerald-500 to-teal-600 rounded-3xl p-8 lg:p-12 text-white overflow-hidden relative">
-            <div className="absolute inset-0 bg-[url('https://readdy.ai/api/search-image?query=Abstract%20diagnostic%20icons%2C%20medical%20checkmark%20patterns%2C%20green%20gradient%20background%2C%20professional%20healthcare%20design%2C%20modern%20technology%20symbols%2C%20clean%20geometric%20shapes&width=1200&height=400&seq=diagnosis-bg&orientation=landscape')] bg-cover bg-center opacity-10"></div>
+            <div className="absolute inset-0 pointer-events-none opacity-30 [background-image:radial-gradient(circle_at_top_left,_rgba(255,255,255,0.45)_0%,_transparent_55%),radial-gradient(circle_at_bottom_right,_rgba(255,255,255,0.35)_0%,_transparent_60%)]"></div>
             
             <div className="relative grid lg:grid-cols-2 gap-8 items-center">
               <div>
@@ -345,15 +381,34 @@ export default function HomePage() {
               </div>
 
               <div className="relative p-8 lg:p-12 flex items-center justify-center">
-                <div className="relative">
-                  <div className="absolute inset-0 bg-gradient-to-r from-purple-500/30 to-blue-500/30 rounded-3xl blur-xl animate-pulse"></div>
-                  <img
-                    src="https://readdy.ai/api/search-image?query=Modern%20smartphone%20with%20eSIM%20activation%20screen%2C%20glowing%20digital%20interface%2C%20futuristic%20holographic%20effects%2C%20purple%20and%20blue%20neon%20lighting%2C%20high-tech%20visualization%2C%20clean%20product%20photography%2C%20professional%20tech%20showcase&width=500&height=600&seq=esim-phone&orientation=portrait"
-                    alt="eSIM対応スマートフォン"
-                    width="500" height="600"
-                    loading="lazy" decoding="async"
-                    className="relative rounded-2xl shadow-2xl transform hover:scale-105 transition-transform duration-500 w-full h-auto"
-                  />
+                <div className="relative w-full max-w-sm">
+                  <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-purple-500/25 to-blue-500/25 blur-3xl" aria-hidden="true"></div>
+                  <div className="relative rounded-3xl bg-white/10 backdrop-blur-xl border border-white/10 p-6 shadow-2xl flex flex-col gap-5">
+                    <div className="flex items-center justify-between text-white/80">
+                      <span className="text-sm font-semibold uppercase tracking-[0.2em]">eSIM Setup</span>
+                      <span className="inline-flex items-center gap-2 text-xs bg-white/10 border border-white/20 rounded-full px-3 py-1">
+                        <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                        Live
+                      </span>
+                    </div>
+                    <div className="space-y-4">
+                      <div className="rounded-2xl bg-white/10 border border-white/20 p-4 text-white">
+                        <p className="text-sm text-blue-100 mb-2">アクティベーションコード</p>
+                        <p className="text-2xl font-semibold tracking-[0.3em]">AB3F-92KD</p>
+                      </div>
+                      <div className="rounded-2xl bg-white/10 border border-white/20 p-4 text-white">
+                        <p className="text-sm text-blue-100 mb-2">開通まで</p>
+                        <p className="text-2xl font-semibold">約 45 分</p>
+                      </div>
+                      <div className="rounded-2xl bg-white/10 border border-white/20 p-4 text-white">
+                        <p className="text-sm text-blue-100 mb-2">サポート</p>
+                        <p className="text-base font-medium">24時間チャット対応</p>
+                      </div>
+                    </div>
+                    <div className="rounded-2xl border border-dashed border-white/30 text-white/80 text-sm p-4">
+                      QRコードを端末に読み込むだけで即日開通。海外プラン切り替えもスムーズです。
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

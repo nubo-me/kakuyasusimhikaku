@@ -65,8 +65,6 @@ export default function RootLayout({
   <meta name="twitter:description" content="主要ブランドの料金・速度・キャンペーンを中立比較。年最大48,000円節約のヒント。" />
   <link rel="canonical" href={SITE_URL + '/'} />
   {/* Performance resource hints */}
-  <link rel="preconnect" href="https://readdy.ai" />
-  <link rel="dns-prefetch" href="https://readdy.ai" />
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossOrigin="anonymous" />
   <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com" />
   <link rel="preconnect" href="https://www.googletagmanager.com" crossOrigin="anonymous" />

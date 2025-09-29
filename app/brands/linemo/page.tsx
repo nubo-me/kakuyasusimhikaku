@@ -78,11 +78,46 @@ export default function LinemoPage() {
               </div>
             </div>
             <div className="text-center">
-              <img 
-                src="https://readdy.ai/api/search-image?query=smartphone%20displaying%20LINEMO%20mobile%20plan%20interface%20with%20clean%20pink%20and%20white%20design%2C%20professional%20tech%20illustration%20showing%20data%20usage%20and%20pricing%2C%20modern%20minimalist%20background&width=500&height=400&seq=linemo-hero&orientation=landscape"
-                alt="LINEMO プラン画面"
-                className="rounded-xl shadow-lg w-full max-w-md mx-auto object-top"
-              />
+              <div className="relative w-full max-w-md mx-auto">
+                <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-pink-400/30 to-emerald-400/30 blur-2xl" aria-hidden="true"></div>
+                <div className="relative rounded-3xl bg-white shadow-2xl border border-pink-100 p-6 text-left">
+                  <div className="flex items-center justify-between mb-6">
+                    <span className="text-sm font-semibold text-gray-500 tracking-[0.2em] uppercase">LINEMO</span>
+                    <span className="inline-flex items-center gap-2 text-xs text-pink-600 bg-pink-100/70 px-3 py-1 rounded-full">
+                      <span className="h-2 w-2 rounded-full bg-pink-500 animate-pulse"></span>
+                      Live
+                    </span>
+                  </div>
+                  <div className="space-y-4">
+                    <div className="rounded-2xl bg-pink-50 border border-pink-100 p-4">
+                      <p className="text-sm font-semibold text-pink-600 mb-1">ミニプラン</p>
+                      <p className="text-3xl font-bold text-gray-900">990<span className="text-base ml-1">円/月</span></p>
+                      <p className="text-xs text-pink-600 mt-2">データ容量 3GB / 速度制限 300kbps</p>
+                    </div>
+                    <div className="grid grid-cols-2 gap-3 text-sm">
+                      <div className="rounded-xl bg-gray-50 border border-gray-100 p-3">
+                        <p className="text-gray-500">回線</p>
+                        <p className="font-semibold text-gray-900">ソフトバンク</p>
+                      </div>
+                      <div className="rounded-xl bg-gray-50 border border-gray-100 p-3">
+                        <p className="text-gray-500">eSIM</p>
+                        <p className="font-semibold text-emerald-600">対応</p>
+                      </div>
+                      <div className="rounded-xl bg-gray-50 border border-gray-100 p-3">
+                        <p className="text-gray-500">LINEギガフリー</p>
+                        <p className="font-semibold text-emerald-600">対象</p>
+                      </div>
+                      <div className="rounded-xl bg-gray-50 border border-gray-100 p-3">
+                        <p className="text-gray-500">申込所要時間</p>
+                        <p className="font-semibold text-gray-900">最短10分</p>
+                      </div>
+                    </div>
+                    <div className="rounded-xl border border-dashed border-pink-200 text-sm text-gray-600 p-4">
+                      5分かけ放題オプション（+550円）で通話にも強いプラン構成にできます。
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

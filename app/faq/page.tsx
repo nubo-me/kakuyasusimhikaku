@@ -192,7 +192,7 @@ export default function FaqPage() {
 
       {/* Hero Section */}
       <section className="py-16 bg-gradient-to-r from-blue-900 via-purple-900 to-indigo-900 text-white relative overflow-hidden">
-        <div className="absolute inset-0 bg-[url('https://readdy.ai/api/search-image?query=Abstract%20question%20mark%20patterns%20with%20FAQ%20symbols%2C%20modern%20help%20desk%20background%2C%20blue%20and%20purple%20gradients%2C%20professional%20design%2C%20geometric%20shapes%2C%20clean%20minimalist%20style&width=1920&height=600&seq=faq-bg&orientation=landscape')] bg-cover bg-center opacity-10"></div>
+        <div className="absolute inset-0 pointer-events-none opacity-25 [background-image:radial-gradient(circle_at_top_left,_rgba(255,255,255,0.35)_0%,_transparent_55%),radial-gradient(circle_at_bottom_right,_rgba(129,140,248,0.35)_0%,_transparent_60%)]"></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="inline-flex items-center px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 mb-6">
             <i className="ri-questionnaire-line text-blue-300 mr-2"></i>
