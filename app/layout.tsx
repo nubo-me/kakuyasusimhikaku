@@ -174,6 +174,26 @@ export default function RootLayout({
                 <ul className="space-y-2 text-gray-300">
                   <li><a href="/compare" className="hover:text-blue-400 transition-colors cursor-pointer">プラン比較</a></li>
                   <li><a href="/diagnosis" className="hover:text-green-400 transition-colors cursor-pointer">プラン診断</a></li>
+                  <li>
+                    <a
+                      href="https://mobilewifihikaku.web.app/"
+                      className="hover:text-blue-400 transition-colors cursor-pointer"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      モバイルWi-Fi比較
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="https://simple-hikari.web.app/"
+                      className="hover:text-blue-400 transition-colors cursor-pointer"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      光回線シンプル比較
+                    </a>
+                  </li>
                 </ul>
               </div>
               <div>
